@@ -1,0 +1,70 @@
+% compile this file with xelatex
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[margin=2cm, a4paper]{geometry}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{fancyvrb}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\newcommand{\mytitle}{Numerical Method - Homework 1}
+\newcommand{\myauthor}{B13902022 Yu-Chi,Lai}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\mytitle}
+\fancyhead[R]{\myauthor}
+
+\title{\mytitle}
+\author{\textbf{\myauthor}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+
+
+\newpage
+\section{}
+I use the following code to reproduce the example ($f_i=1,A=-64,B=0$) given in the paper, and I got $0$ using the first method (\texttt{calc1()}, $1-p_i=1-\frac{1}{1+e^{Af_i+B}}$), while getting 1.60381e-28 when using the second method (\texttt{calc2()}, $1-p_i=\frac{e^{Af_i+B}}{1+e^{Af_i+B}}$)
+
+The second result is more precise, this is mainly because, when $(f_i,A,B)=(1,-64,0)$, $\mathrm{exp}(Af_i+B)\approx 0$, it successfully avoid the subtraction between two close numbers in \texttt{calc1} (In this case, $1$ and $p_i$), which leads to catastrophic cancellation.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{cpp}
+#include <bits/stdc++.h>
+using namespace std;
+
+double calc1(double f, double A, double B) {
+    return 1.0 - 1.0 / (exp(A*f+B)+1.0);
+}
+
+double calc2(double f, double A, double B) {
+    return exp(A*f+B) / (1.0+exp(A*f+B));
+}
+
+int main() {
+    cout << calc1(1, -64, 0) << endl;
+    // output: 0
+    cout << calc2(1, -64, 0) << endl;
+    // output: 1.60381e-28
+} 
+\end{minted}
+
+\end{document}
