@@ -41,12 +41,37 @@
 
 \section{}
 
+The cancellation issue arises when TRON computes the Conjugate Gradient (CG) step length $\alpha$ at the trust-region boundary. This is derived from the condition:
+\begin{equation}
+\|s + \alpha d\|^2 = \Delta^2
+\end{equation}
+Solving for the positive root of this quadratic equation yields:
+\begin{equation}
+\alpha = \frac{-s^\top d + \sqrt{(s^\top d)^2 + \|d\|^2(\Delta^2 - \|s\|^2)}}{\|d\|^2}
+\end{equation}
+
+When $s^\top d > 0$, the term $\sqrt{(s^\top d)^2 + \dots} - s^\top d$ involves the subtraction of two nearly equal floating-point numbers, leading to \textbf{catastrophic cancellation}. To ensure numerical robustness, LIBLINEAR (specifically in \texttt{tron.cpp}) utilizes the following piecewise implementation:
+
+\begin{itemize}
+    \item \textbf{If $s^\top d \geq 0$:} The formula is rationalized to avoid subtraction:
+    \begin{equation}
+    \alpha = \frac{\Delta^2 - \|s\|^2}{s^\top d + \sqrt{(s^\top d)^2 + \|d\|^2(\Delta^2 - \|s\|^2)}}
+    \end{equation}
+    
+    \item \textbf{Else ($s^\top d < 0$):} The standard quadratic formula is safe to use, as $-s^\top d$ is positive:
+    \begin{equation}
+    \alpha = \frac{\sqrt{(s^\top d)^2 + \|d\|^2(\Delta^2 - \|s\|^2)} - s^\top d}{\|d\|^2}
+    \end{equation}
+\end{itemize}
+
+By switching between these algebraically equivalent forms based on the sign of $s^\top d$, the implementation maintains high precision even near the trust-region boundary.
 
 \newpage
 \section{}
 I use the following code to reproduce the example ($f_i=1,A=-64,B=0$) given in the paper, and I got $0$ using the first method (\texttt{calc1()}, $1-p_i=1-\frac{1}{1+e^{Af_i+B}}$), while getting 1.60381e-28 when using the second method (\texttt{calc2()}, $1-p_i=\frac{e^{Af_i+B}}{1+e^{Af_i+B}}$)
 
 The second result is more precise, this is mainly because, when $(f_i,A,B)=(1,-64,0)$, $\mathrm{exp}(Af_i+B)\approx 0$, it successfully avoid the subtraction between two close numbers in \texttt{calc1} (In this case, $1$ and $p_i$), which leads to catastrophic cancellation.
+
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{cpp}
 #include <bits/stdc++.h>
 using namespace std;
