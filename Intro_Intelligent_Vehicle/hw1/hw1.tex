@@ -26,6 +26,7 @@
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+
 \fancyhead{}
 \fancyhead[L]{\mytitle}
 \fancyhead[R]{\myauthor}
@@ -34,17 +35,33 @@
 \author{\textbf{\myauthor}}
 \date{}
 
+
 \begin{document}
 
 \maketitle
 
 \section{Timing Analysis of the CAN Protocol: Part I (12pt)}
+\subsection{}
+Firstly, set $Q_0=B_0=0$.
+\begin{table}[h]
+    \centering % This centers the table on the page
+    \begin{tabular}{|c||c||c|c|c|} 
+        \hline 
+        Iteration & LHS ($Q_0$) & $B_0$ & RHS & Stop? \\ [0.5ex] 
+        \hline \hline
+        1 & & & & \\ [1ex] 
+        \hline 
+    \end{tabular}
+\end{table}
 
 \section{Timing Analysis of the CAN Protocol: Part II (36pt)}
+
 \section{Timing Analysis of Preemptive Fixed-Priority Scheduling (16pt)}
 \section{Timing Analysis of TDMA-Based Protocols (12pt)}
+
 \section{MILP Linearization (12pt)}
 \section{Signal Packing (12pt)}
+
 
 \end{document}
 % how to display codes?
