@@ -42,18 +42,60 @@
 
 \section{Timing Analysis of the CAN Protocol: Part I (12pt)}
 \subsection{}
-Firstly, set $Q_0=B_0=0$.
+Firstly, set $Q_0=B_0=C_1=30$, since no other task has higher priority than $\mu_0$, the terms in the summation is zero.
+
+Hence, the worst-case response time $R_0=Q_0+C_0=30+10=40$(msec).
 \begin{table}[h]
     \centering % This centers the table on the page
     \begin{tabular}{|c||c||c|c|c|} 
         \hline 
         Iteration & LHS ($Q_0$) & $B_0$ & RHS & Stop? \\ [0.5ex] 
         \hline \hline
-        1 & & & & \\ [1ex] 
+        1 & 30 & 30 & 30 & yes\\ [1ex] 
         \hline 
     \end{tabular}
 \end{table}
 
+\subsection{}
+Let $Q_1=B_1=C_1=30$ as the beginnning.
+\begin{table}[h]
+    \centering
+    % Adding extra row height to prevent the fraction from touching the lines
+    \renewcommand{\arraystretch}{1.5} 
+    
+    \begin{tabular}{|c||c||c|c|c|c|c|c|c|c|}
+        \hline
+        Iteration & LHS ($Q_1$) & $B_1$ & $j$ & $Q_1 + \tau$ & $T_j$ & $\left\lceil \frac{Q_1 + \tau}{T_j} \right\rceil$ & $C_j$ & RHS & Stop? \\ 
+        \hline \hline
+        1 & 30 & 30 & 0 & 30.1 & 50 & 1 & 10 & 40 & no \\ 
+        \hline
+        2 & 40 & 30 & 0 & 40.1 & 50 & 1 & 10 & 40 & yes \\ 
+        \hline
+    \end{tabular}
+\end{table}
+
+Thus, the worst-case response time of $\mu_1$ is $R_1=Q_1+C_1=40+30=70$(msec).
+
+\subsection{}
+Let $Q_2=B_2=C_2=20$ as the beginnning.
+\begin{table}[h]
+    \centering
+    % Adding extra row height to prevent the fraction from touching the lines
+    \renewcommand{\arraystretch}{1.5} 
+    
+    \begin{tabular}{|c||c||c|c|c|c|c|c|c|c|}
+        \hline
+        Iteration & LHS ($Q_2$) & $\left\lceil \frac{Q_2 + \tau}{T_0} \right\rceil C_0+\left\lceil \frac{Q_2+\tau}{T_1}\right\rceil C_1$ & RHS & Stop? \\ 
+        \hline \hline
+        1 & 20 & 40 & 60 & no \\ 
+        \hline
+        2 & 60 & 50  & 70 & no \\ 
+        \hline
+        3 & 70 & 50 & 70 & yes \\ 
+        \hline
+    \end{tabular}
+\end{table}
+After 3 iterations, $Q_2$ converges. Hence, the worst case response time $R_2=Q_2+C_2=70+20=90$(msec).
 \section{Timing Analysis of the CAN Protocol: Part II (36pt)}
 
 \section{Timing Analysis of Preemptive Fixed-Priority Scheduling (16pt)}
