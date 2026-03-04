@@ -98,6 +98,77 @@ Let $Q_2=B_2=C_2=20$ as the beginnning.
 After 3 iterations, $Q_2$ converges. Hence, the worst case response time $R_2=Q_2+C_2=70+20=90$(msec).
 \section{Timing Analysis of the CAN Protocol: Part II (36pt)}
 
+\subsection{}
+\begin{align*}
+R_{0} &= 1 \\
+R_{1} &= 2 \\
+R_{2} &= 2 \\
+R_{3} &= 3 \\
+R_{4} &= 3 \\
+R_{5} &= 4 \\
+R_{6} &= 5  \\
+R_{7} &= 8 \\
+R_{8} &= 9 \\
+R_{9} &= 9 \\
+R_{10} &= 10 \\
+R_{11} &= 19 \\
+R_{12} &= 19 \\
+R_{13} &= 20 \\
+R_{14} &= 29 \\
+R_{15} &= 29 \\
+R_{16} &= 30
+\end{align*}
+\subsection{}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{cpp}
+#include <bits/stdc++.h>
+using namespace std;
+signed main() {
+    ifstream fin("input.dat");
+    int n;
+    double tau;
+    fin >> n;
+    fin >> tau;
+    vector<int> priority(n);
+    vector<double> transmission_time(n), period(n);
+    for (int i = 0; i < n; ++i) {
+        fin >> priority[i] >> transmission_time[i] >> period[i];
+    }
+    fin.close();
+    vector<int> res(n);
+    for (int i = 0; i < n; i++) {
+        double block = 0;
+        for (int j = 0; j < n; j++) {
+            if (priority[j] >= priority[i]) {
+                block = max(block, transmission_time[j]);
+            }
+        }
+        double wait = block;
+        while (1) {
+            double result  = block;
+            for (int j = 0; j < n; j++) {
+                if (priority[j] < priority[i]) {
+                    result += transmission_time[j] * ceil((wait + tau) / period[j]); 
+                }
+            }
+            if (result > period[i]) {
+                res[i] = -1;
+                break;
+            }
+            if (result-wait <= 1e-9 && result-wait >= -(1e-9)) {
+                res[i] = transmission_time[i] + wait;
+                break;
+            } else {
+                wait = result;
+                continue;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        cout << res[i] << endl;
+    }
+}
+\end{minted}
+
 \section{Timing Analysis of Preemptive Fixed-Priority Scheduling (16pt)}
 \section{Timing Analysis of TDMA-Based Protocols (12pt)}
 
