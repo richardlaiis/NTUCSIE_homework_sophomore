@@ -39,7 +39,35 @@
 \maketitle
 
 \section{}
+Consider the evaluation map defined by substituting $x$ with $u$:
+$$\varphi: K[x]\rightarrow L,\ g(x)\mapsto g(u)$$
+The image of this homomorphism, $\mathrm{Im}{(\varphi)}$, is $K[u]$ by definition. Because $u$ is algebraic over $K$, there exists at least one non-zero polynomial in $K[x]$ having $u$ as a root. Hence, $\ker{(\varphi)}\ne \{0\}$.
+
+Since $K$ is a field, thus $K[x]$ is a PID. Let the monic generator of $\ker{(\varphi)}$ be $f(x)$, i.e., $\ker{(\varphi)}=(f(x))$. By the first isomorphism for rings, we have:
+$$K[x]/(f(x))\cong K[u]$$
+\subsection{(b)}
+Since $K[u]$ is a subring of $L$, and $L$ is an integral domain, so $K[u]$ is also a integral domain. Since $K[x]/(f(x))$ is an integral domain by the isomorphism, $(f(x))$ is a prime ideal, and every non-zero prime ideal in a PID is maximal.
+
+Because $(f(x))$ is maximal, its generator $f(x)$ is irreducible, and furthermore, $K[x]/(f(x))$ is a field.
+
+Finally, $f(x)$ satisfies two properties. Since $f\in \ker{\varphi}$, we have $f(u)=0$. And for any $g\in K[x]$ such that $g(u)=0$, it means that $g\in \ker{\varphi}=(f(x))$, hence $g(x)$ is divisible by $f(x)$. The converse is also true, if $g(x)$ is divisible by $f(x)$, it means $g(x)\in (f(x))=\ker{(\varphi)}$, so $g(u)=0$.
+
+\subsection{(a)}
+Since $K(u)$ contains all element of the forms $\frac{g(u)}{1}$ where $g(x)\in K[x]$, $K[u]$ automatically lies in $K(u)$, so we have $K[u]\subseteq K(u)$.
+
+But from (b) we know $K[u]$ is a field containing both $K$ and $u$, and $K(u)$ is the smallest subfield of $L$ meets this requirement. Hence, $K[u]=K(u)$, thus $K[u]\cong K(u)$.
 \section{}
+Since $u$ is algebraic over $K$, then there exists a unique monic irreducible polynomial $f\in K[x]$ such that $f(u)=0$. Let the isomorphism from $K(u)$ to $K(u')$ be $\varphi$, let $f(x)=a_0+a_1x+a_2x^2+\ldots+ a_nx^n$.
+
+$$f(u)=a_0+a_1u+a_2u^2+\ldots+a_nu^n\in K(u)$$
+If we map $f(u)$ to $K(u')$ using $\varphi$, we get:
+\begin{align*}    
+\varphi(f(u))&=\varphi(a_0+a_1u+a_2u^2+\ldots+a_nx^n) \\
+&=\varphi(a_0)+\varphi(a_1)\varphi(u)+\varphi(a_2)\varphi(u^2)+\ldots+\varphi(a_n)\varphi(u^n) \\
+&=a_0+a_1u'+a_2u'^2+\ldots+a_nu'^n \\
+&=f(u')=0
+\end{align*}
+Hence, $u$ and $u'$ are roots of the same irreducible polynomial $f\in K[x]$.
 
 \end{document}
 % how to display codes?
