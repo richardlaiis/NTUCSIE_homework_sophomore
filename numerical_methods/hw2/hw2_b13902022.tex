@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{graphicx}
 \usepackage[margin=2cm, a4paper]{geometry}
 \usepackage{setspace}
@@ -39,7 +39,12 @@
 \maketitle
 
 \section{}
-\newpage
+\subsection{(a)}
+In section 3.4, I found: "Trivially, you can also apply a positive operator to a numeric expression: \texttt{int x = +42;} Numeric values are assumed to be positive unless explicitly made negative, so this operator has no effect on program operation"
+
+Hence, the expression 0.0 conveys +0.0 by default.
+\subsection{(b)}
+In section 7.12.3.6, there's an \texttt{signbit()} macro in C99 standard (And you should also \texttt{\#include <math.h>}). The \verb|signbit| macro returns a nonzero value if and only if the sign of its argument value is negative.
 
 
 \end{document}
