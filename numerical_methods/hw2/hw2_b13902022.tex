@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass{article}
 \usepackage{graphicx}
 \usepackage[margin=2cm, a4paper]{geometry}
 \usepackage{setspace}
@@ -42,9 +42,50 @@
 \subsection{(a)}
 In section 3.4, I found: "Trivially, you can also apply a positive operator to a numeric expression: \texttt{int x = +42;} Numeric values are assumed to be positive unless explicitly made negative, so this operator has no effect on program operation"
 
-Hence, the expression 0.0 conveys +0.0 by default.
+Hence, the expression 0.0 conveys +0.0 by default. The code and its output is my experiment.
+\inputminted[
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=lightgray!10,
+    linenos
+]{c}{positive_zero.c}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{1a.png}
+    \caption{The output}
+\end{figure}
 \subsection{(b)}
 In section 7.12.3.6, there's an \texttt{signbit()} macro in C99 standard (And you should also \texttt{\#include <math.h>}). The \verb|signbit| macro returns a nonzero value if and only if the sign of its argument value is negative.
+\subsection{(c)}
+We can declare/specify them using unary operators, positive/negative number division by infinity, zero times positive/negative number or the \texttt{copysign()} method in \texttt{<math.h>}. The program below is my experiment:
+\inputminted[
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=lightgray!10,
+    linenos,
+    breaklines
+]{c}{1c.c}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{1c.png}
+    \caption{The output of the program above.}
+\end{figure}
+\subsection{(d)}
+We should adopt the first implementation ($(x>y)?x:y$) because if we set $b=-0.0$, the returned value of the first implementation is +0.0=0.0 (Hence, $c=-\infty<0$) while the second implementation gives -0.0 (Hence, $c=+\infty>0$). We can use the program below to prove our claim. 
+\inputminted[
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    bgcolor=lightgray!10,
+    linenos
+]{c}{max_test.c}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\linewidth]{1d.png}
+    \caption{The output.}
+\end{figure}
 
 
 \end{document}
@@ -53,9 +94,4 @@ In section 7.12.3.6, there's an \texttt{signbit()} macro in C99 standard (And yo
 % \end{minted}
 
 % how to display images?
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.5\linewidth]{}
-%     \caption{Caption}
-% \end{figure}
 % test
