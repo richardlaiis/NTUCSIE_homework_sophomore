@@ -1,0 +1,24 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{n\PYGZus{}values} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+m+mi}{1000}\PYG{p}{,} \PYG{l+m+mi}{4000}\PYG{p}{];} 
+
+\PYG{k}{for} \PYG{n}{n} \PYG{p}{=} \PYG{n}{n\PYGZus{}values}
+    \PYG{n}{A} \PYG{p}{=} \PYG{n}{generate\PYGZus{}spd}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);} 
+    
+    \PYG{c}{\PYGZpc{} Measure Vectorized Version}
+    \PYG{n+nb}{tic}\PYG{p}{;}
+    \PYG{n}{chol\PYGZus{}vectorized}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+    \PYG{n}{time\PYGZus{}vec} \PYG{p}{=} \PYG{n+nb}{toc}\PYG{p}{;}
+    
+    \PYG{c}{\PYGZpc{} Measure One\PYGZhy{}level Loop Version}
+    \PYG{n+nb}{tic}\PYG{p}{;}
+    \PYG{n}{chol\PYGZus{}onelevel}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+    \PYG{n}{time\PYGZus{}one} \PYG{p}{=} \PYG{n+nb}{toc}\PYG{p}{;}
+
+    \PYG{c}{\PYGZpc{} Measure Two\PYGZhy{}level Loop Version}
+    \PYG{n+nb}{tic}\PYG{p}{;}
+    \PYG{n}{chol\PYGZus{}twolevel}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+    \PYG{n}{time\PYGZus{}two} \PYG{p}{=} \PYG{n+nb}{toc}\PYG{p}{;}
+    
+    \PYG{n+nb}{fprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}For n=\PYGZpc{}d: Vectorized = \PYGZpc{}f s, One\PYGZhy{}loop = \PYGZpc{}f s, Two\PYGZhy{}loop = \PYGZpc{}f s\PYGZbs{}n\PYGZsq{}}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{time\PYGZus{}vec}\PYG{p}{,} \PYG{n}{time\PYGZus{}one}\PYG{p}{,} \PYG{n}{time\PYGZus{}two}\PYG{p}{);}
+\PYG{k}{end}
+\end{MintedVerbatim}

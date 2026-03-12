@@ -86,6 +86,38 @@ We should adopt the first implementation ($(x>y)?x:y$) because if we set $b=-0.0
     \includegraphics[width=0.2\linewidth]{1d.png}
     \caption{The output.}
 \end{figure}
+\section{}
+\subsection*{(i)}
+Because I don't have matlab locally, I use GNU octave to implement everything.
+
+\noindent \textbf{No loop (vectorized) version:}
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos]{octave}{chol_vectorized.m}
+\noindent \textbf{One-level loop version:}
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos]{octave}{chol_onelevel.m}
+\noindent \textbf{Two-level loop version:}
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos]{octave}{chol_twolevel.m}
+\subsection*{(ii)}
+In my code, I generate a random $n\times n$ matrix $X$, and then we get a symmetry matrix $XX^T$ which is also positive semi-definite. The reason why it is can be shown below:
+\begin{align*}
+    \text{Let }A=XX^T \\
+    A^T=(XX^T)^T=(X^T)^TX^T=XX^T=A \\
+    \forall v\in\mathbb{R}^n,v\ne \vec{0},v^TAv=v^TAA^Tv=(A^Tv)^T(A^Tv)\ge 0 
+\end{align*}
+And then by adding a $n\times n$ identity matrix times a positive constant, we can ensure that $v^T(A+nI)v=v^TAv+nv^TIv>0$, i.e., positive definite, without breaking the symmetry. The below is my code:
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos]{octave}{generate_spd.m}
+\begin{figure}[H]
+    \centering\includegraphics[width=0.6\linewidth]{verify.png}
+    \caption{The correctness of my three implementations of cholesky factorization (proved by built-in \texttt{chol()})}
+\end{figure}
+\subsection*{(iii)}
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{octave}{test_time.m}
+\subsection*{(iv)}
+I found that the vectorized implementation significantly outperformed the looped versions because it avoids the interpreter overhead associated with element-by-element processing. 
+
+According to the Octave manual, vectorization allows the program to bypass high-level interpretation and utilize optimized internal C++, C, or Fortran libraries that leverage hardware vector instructions. The goal of vectorization is to write code that is making loops less (like for and while), instead, use whole array operations which is more efficient.
+
+This approach achieved the 10X–100X speedup typical of Octave’s matrix-oriented design. In contrast, my two-loop and one-loop versions were slower because Octave had to re-evaluate the code and check data types for every individual iteration. (one loop is faster than two-loop because the column addition also utilize the technique of vectorization)
+\subsection*{(v)}
 
 
 \end{document}

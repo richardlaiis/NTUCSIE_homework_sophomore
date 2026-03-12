@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }A\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{generate\PYGZus{}spd}\PYG{p}{(}n\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{X} \PYG{p}{=} \PYG{n+nb}{randn}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);} 
+    \PYG{n}{A} \PYG{p}{=} \PYG{n}{X} \PYG{o}{*} \PYG{n}{X}\PYG{o}{\PYGZsq{}} \PYG{o}{+} \PYG{n}{n} \PYG{o}{*} \PYG{n+nb}{eye}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{k}{endfunction}
+
+\end{MintedVerbatim}

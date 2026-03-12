@@ -1,7 +1,7 @@
-n_values = [10, 100, 1000, 4000]; % Suggested n values 
+n_values = [10, 100, 1000, 4000]; 
 
 for n = n_values
-    A = generate_spd(n); % Create the matrix [cite: 49]
+    A = generate_spd(n); 
     
     % Measure Vectorized Version
     tic;
