@@ -41,7 +41,7 @@
 \section*{1.2-17}
 \subsection*{(a)}
 To draw 4 cards with the same face value, there's $13$ possibilities, then draw one from the rest of cards, there's $52-4=48$ possibilities (By definition, it's impossible to have same value with the previous $4$ cards.), Hence, the probability is:
-\[\frac{13\times 48}{\binom{52}{4}}=\frac{1}{4165}\]
+\[\frac{13\times 48}{\binom{52}{5}}=\frac{1}{4165}\]
 \subsection*{(b)}
 We can choose two type of from $13$ face values, and for each face value we have $4$ colors to choose, then we can choose either $2$ or $3$ cards from them (but not for both types). (btw, we should time a extra $2$, for instance, if we need to construct a full-house using $2$ and $3$, we can draw $2$ cards from face value $2$ and $3$ cards from face value $3$, or draw $3$ cards from face value $2$ and $2$ cards from face value $3$, there's two possibilities.) Thus, the probability is:
 \[\frac{\binom{13}{2}\binom{4}{2}\binom{4}{3}\times 2}{\binom{52}{5}}=\frac{6}{4165}\]
@@ -56,19 +56,59 @@ Choose $4$ ranks from $13$ ($\binom{13}{4}$), then decide which of the $4$ ranks
 \[\frac{\binom{13}{4}\binom{4}{2}(\binom{4}{1})^3\times 4}{\binom{52}{5}}=\frac{352}{833}\]
 \section*{1.3-13}
 \subsection*{(a)}
+Let's denoted $(a,b)$ as: The first dice rolls out $a$ and the second dice rolls out $b$. There's $36$ outcomes:
+
+\noindent(1,1), (1,2), (1,3), (1,4), (1,5), (1,6)
+
+\noindent(2,1), (2,2), (2,3), (2,4), (2,5), (2,6)
+
+\noindent(3,1), (3,2), (3,3), (3,4), (3,5), (3,6)
+
+\noindent(4,1), (4,2), (4,3), (4,4), (4,5), (4,6)
+
+\noindent(5,1), (5,2), (5,3), (5,4), (5,5), (5,6)
+
+\noindent(6,1), (6,2), (6,3), (6,4), (6,5), (6,6)
+
 \subsection*{(b)}
+By $(a)$, there are $6$ possibilities of rolling out the sum of $7$, and $2$ possibilities for $11$.
+
+Hence, the probability for this question is $\frac{6+2}{36}=\frac{2}{9}$.
 \subsection*{(c)}
+There are $5$ possibilities of having sum $8$, and $6$ possibilities of having sum $7$. Hence, we have:
+\[P(8|\text{7 or 8})=\frac{5}{5+6}=\frac{5}{11}\]
 \subsection*{(d)}
+There're $5$ possibilities of having sum $8$, $P(8)=\frac{5}{36}$.
+
+By $(b)$, $P(8|\text{7 or 8})=\frac{5}{11}$.
+
+Hence, $P(8)P(8|\text{7 or 8})=\frac{5}{36}\times\frac{5}{11}$.
 \subsection*{(e)}
-\section*{1.4-15}
-Define the random variable $X$ as: The fourth white balls appeaing at $X$-th round. And $P$ be the probability function.
-\subsection*{(a)}
-With replacement, the probability of taking white balls $p$ is $\frac{1}{2}$. Also we can consider the experiment as a bernoulli trial.
+Similarily, we can consider the case of winning when rolling 4,5,6,8,9,10 and win.
 \begin{align*}
-    P(X=4)=(1-p)^3p=\frac{1}{16} \\
-    P(X=5)=(1-p)^4p=\frac{1}{32} \\
-    P(X=6)=(1-p)^5p=\frac{1}{64} \\
-    P(X=7)=(1-p)^6p=\frac{1}{128}
+    P(4)P(4|\text{7 or 4})=\frac{3}{36}\times \frac{3}{9}=\frac{1}{36} \\
+    P(5)P(5|\text{7 or 5})=\frac{4}{36}\times \frac{4}{10}=\frac{2}{45} \\
+    P(6)P(6|\text{7 or 6})=\frac{5}{36}\times \frac{5}{11}=\frac{25}{396} \\
+    P(8)P(8|\text{7 or 8})=\frac{5}{36}\times \frac{5}{11}=\frac{25}{396} \\
+    P(9)P(9|\text{7 or 9})=\frac{4}{36}\times \frac{4}{10}=\frac{2}{45} \\
+    P(10)P(10|\text{7 or 10})=\frac{3}{36}\times \frac{3}{9}=\frac{1}{36} \\
+\end{align*}
+By adding the results above and the probability of winning at first roll, the answer is:
+\[\frac{2}{9}+(\frac{1}{36}+\frac{2}{45}+\frac{25}{396}+\frac{25}{396}+\frac{2}{45}+\frac{1}{36})\approx 0.49293\]
+\section*{1.4-15}
+Define the random variable $X$ as: The fourth white balls appearing at $X$-th round. And $P$ be the probability function.
+\subsection*{(a)}
+With replacement, the probability of taking white balls $p$ is $\frac{1}{2}$. Also we can consider the experiment as a bernoulli trial. This is an problem of negative binomial distribution. 
+
+After a sequence of taking balls, we takes $r$-th white balls after taking $k$ red balls, and the probability of taking white balls (in each round with replacement) is $p$, the probability is:
+\[\binom{r+k-1}{k}(1-p)^kp^r\]
+
+Hence, the answers can be obtained easily as below, there $p=\frac{1}{2}$ (Denote the probability of taking white ball):
+\begin{align*}
+    P(X=4)=\binom{3}{0}(1-p)^0p^4=\frac{1}{16} \\
+    P(X=5)=\binom{4}{1}(1-p)^1p^4=\frac{1}{8} \\
+    P(X=6)=\binom{5}{2}(1-p)^2p^4=\frac{5}{32} \\
+    P(X=7)=\binom{6}{3}(1-p)^3p^4=\frac{5}{32}
 \end{align*} 
 \subsection*{(b)}
 We can consider the results as the permutations of $10$ white balls and $10$ red balls. And if we take $d$-th white ball at $r$-th round (where $d \le r$), the number of permutations is:
@@ -79,9 +119,16 @@ The total number of permutations of the $20$ balls is :
 By the formula above, we can easily obtain all the answers:
 
 \begin{align*}
-P(X=4)= \\    
+P(X=4)=\frac{1\times 8008}{184756}=\frac{14}{323} \\    
+P(X=5)=\frac{4\times 5005}{184756}=\frac{35}{323} \\
+P(X=6)=\frac{10\times 3003}{184756}=\frac{105}{646} \\
+P(X=7)=\frac{20\times 1716}{184756}=\frac{60}{323}
 \end{align*}
+
 \subsection*{(c)}
+Yes.
+
+The World Series is best modeled as sampling \textbf{with replacement} because a team’s probability of winning remains relatively constant; winning one game doesn't "deplete" their ability to win others. By setting $p = 0.5$ (assuming teams are evenly matched), the series length follows a Negative Binomial distribution. We multiply the single-team probability by $2$ to account for symmetry (It's $1$), which means either the American or National League can reach four wins first.
 \section*{1.5-4}
 Consider $4$ partitions (age 16-25, 26-50, 51-65, 66-90, respectively) as $B_1$, $B_2$, $B_3$, $B_4$, and $A$ be the event of accident. By Bayes' Theorem we obtain the answer:
 \begin{align*}
