@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[margin=2cm, a4paper]{geometry}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{fancyvrb}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\newcommand{\mytitle}{Probability - Homework 1}
+\newcommand{\myauthor}{B13902022 Yu-Chi,Lai}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\mytitle}
+\fancyhead[R]{\myauthor}
+
+\title{\mytitle}
+\author{\textbf{\myauthor}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1.2-17}
+\subsection*{(a)}
+To draw 4 cards with the same face value, there's $13$ possibilities, then draw one from the rest of cards, there's $52-4=48$ possibilities (By definition, it's impossible to have same value with the previous $4$ cards.), Hence, the probability is:
+\[\frac{13\times 48}{\binom{52}{4}}=\frac{1}{4165}\]
+\subsection*{(b)}
+\subsection*{(c)}
+\subsection*{(d)}
+\subsection*{(e)}
+\section*{1.3-13}
+\subsection*{(a)}
+\subsection*{(b)}
+\subsection*{(c)}
+\subsection*{(d)}
+\subsection*{(e)}
+\section*{1.4-15}
+\subsection*{(a)}
+\subsection*{(b)}
+\subsection*{(c)}
+\section*{1.5-4}
+
+
+\end{document}
+% how to display codes?
+% \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{python}
+% \end{minted}
+
+% how to display images?
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{}
+%     \caption{Caption}
+% \end{figure}
+% test
