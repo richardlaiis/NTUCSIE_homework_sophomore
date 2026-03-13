@@ -61,10 +61,34 @@ Choose $4$ ranks from $13$ ($\binom{13}{4}$), then decide which of the $4$ ranks
 \subsection*{(d)}
 \subsection*{(e)}
 \section*{1.4-15}
+Define the random variable $X$ as: The fourth white balls appeaing at $X$-th round. And $P$ be the probability function.
 \subsection*{(a)}
+With replacement, the probability of taking white balls $p$ is $\frac{1}{2}$. Also we can consider the experiment as a bernoulli trial.
+\begin{align*}
+    P(X=4)=(1-p)^3p=\frac{1}{16} \\
+    P(X=5)=(1-p)^4p=\frac{1}{32} \\
+    P(X=6)=(1-p)^5p=\frac{1}{64} \\
+    P(X=7)=(1-p)^6p=\frac{1}{128}
+\end{align*} 
 \subsection*{(b)}
+We can consider the results as the permutations of $10$ white balls and $10$ red balls. And if we take $d$-th white ball at $r$-th round (where $d \le r$), the number of permutations is:
+\[\frac{(r-1)!}{(d-1)!(r-d)!}\times\frac{(20-r)!}{(10-d)!(10-r+d)!}=\binom{r-1}{d-1}\times \binom{20-r}{10-d}\]
+The total number of permutations of the $20$ balls is :
+\[\frac{20!}{10!10!}=\binom{20}{10}\]
+
+By the formula above, we can easily obtain all the answers:
+
+\begin{align*}
+P(X=4)= \\    
+\end{align*}
 \subsection*{(c)}
 \section*{1.5-4}
+Consider $4$ partitions (age 16-25, 26-50, 51-65, 66-90, respectively) as $B_1$, $B_2$, $B_3$, $B_4$, and $A$ be the event of accident. By Bayes' Theorem we obtain the answer:
+\begin{align*}
+    P(B_1|A) &= \frac{P(A|B_1)P(B_1)}{P(A|B_1)P(B_1)+P(A|B_2)P(B_2)+P(A|B_3)P(B_3)+P(A|B_4)P(B_4)} \\
+    &= \frac{0.05\times 0.10}{0.05\times 0.10+0.02\times 0.55+0.03\times 0.20+0.04\times 0.15} \\
+    &= 0.178571428571\approx 0.1786
+\end{align*}
 
 
 \end{document}
