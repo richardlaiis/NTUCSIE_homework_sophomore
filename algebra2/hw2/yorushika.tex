@@ -43,11 +43,29 @@
 % \coffeestainB{0.6}{0.8}{30}{10cm}{15cm}
 \section{}
 \subsection*{(a)}
+By the tower law, $[K:\mathbb{R}]=[K:\mathbb{C}][\mathbb{C}:\mathbb{R}]=2^{a+1}m$. Let $L$ be the Galois closure of $K$ over $\mathbb{R}$. Set $G=\mathrm{Gal}(L/\mathbb{R})$, so $|G|=[L:\mathbb{R}]$. It's obvious that $|G|=2^bm'$ for some $b\le a, m'|m, \text{m' is odd}$ (also by tower law).
+
+Let $P\le G$ be a sylow 2-subgroup of $G$, so $[G:P]=m'$ is odd. Let $F$ be the corresponding intermediate field, we have $[F:\mathbb{R}]=[G:P]=m'$. Suppose $\alpha\in F\backslash \mathbb{R}$, and its minimal irreducible polynomial has degree $d$ ($d\ge 2$). Clearly, $d|[F:\mathbb{R}]$ so $d$ is odd. But any odd-degree polynomial has a real root, which condradicts the irreducibility. Hence, $F=\mathbb{R}$ and $G=P$ is a 2-group.
+
+Therefore, $[L:\mathbb{R}]=2^b$, by the tower law, $[L:\mathbb{R}]=[L:\mathbb{C}][\mathbb{C}:\mathbb{R}]=2[L:\mathbb{C}]$, $[L:\mathbb{C}]=2^{b-1}$. Since $[K:\mathbb{C}]$ divides $[L:\mathbb{C}]$, the only possibility is $a=0$.
 \subsection*{(b)}
+Assume, $a\le 1$.
+Now define $H=\mathrm{Gal}(L/\mathbb{C})\le G$, the subgroup is not trivial since $|H|=[L:\mathbb{C}]=[L:K][\mathbb{K}:\mathbb{C}]\le 2^a\le 2$
+
+Since $2$ is the least prime dividing $|H|$, there exists a normal subgroup of $H$ of index $2$, let it be $N$, $[H:N]=2$. By the Galois correspondance, the fixed field $E=L^N$ satisfies $[E:\mathbb{C}]=[H:N]=2$, so $E$ is a degree-2 extension of $\mathbb{C}$.
+
+Pick any $\beta\in E\backslash \mathbb{C}$, its minimal irreducible polynomial over $\mathbb{C}$ must be quadratic:
+\[x^2+bx+c, b,c\in \mathbb{C}\]
+By the formula, the roots are $\frac{-b\pm \sqrt{b^2-4ac}}{2}$, now $b^2-4ac\in \mathbb{C}$ and every complex number has its square root in $\mathbb{C}$ trivially, so $\beta\in \mathbb{C}$, a contradiction. 
+
+Hence, $a=0$.
 \section{}
 \subsection*{(a)}
+The minimal polynomial of $\sqrt[3]{2}$ over $\mathbb{Q}$ is $x^3-2=(x-\sqrt[3]{2})(x^2+2x+2)$, which does not split in $\mathbb{Q}(\sqrt[3]{2})$. Hence, $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ is not a normal extension.
 \subsection*{(b)}
+Since $\mathbb{Q}(\sqrt[4]{2}, \zeta_8)/\mathbb{Q}$ contains all roots of $x^4-2$ ($\sqrt[4]{2}, -\sqrt[4]{2}, \zeta_8^2\sqrt[4]{2}, -\zeta_8^2\sqrt[4]{2}$), it's a splitting field for the irreducible polynomial (in $\mathbb{Q}[x]$) $x^4-2$. Every splitting field is normal, so $\mathbb{Q}(\sqrt[4]{2}, \zeta_8)/\mathbb{Q}$ is normal.
 
+Clearly, $\mathbb{Q}(\sqrt[4]{2}, \zeta_8)=\mathbb{Q}(\sqrt[4]{2}, i)$. By tower law, $[\mathbb{Q}(\sqrt[4]{2}), i:\mathbb{Q}]=[\mathbb{Q}(\sqrt[4]{2}, i):\mathbb{Q}(i)][\mathbb{Q}(i):\mathbb{Q}]=4\times 2=8$. Hence, the degree for the extension is $8$.
 \end{document}
 % how to display codes?
 % \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{python}
