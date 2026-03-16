@@ -110,14 +110,19 @@ And then by adding a $n\times n$ identity matrix times a positive constant, we c
     \caption{The correctness of my three implementations of cholesky factorization (proved by built-in \texttt{chol()})}
 \end{figure}
 \subsection*{(iii)}
+I used meow1 (with GPU) in CSIE workstation, and the code for testing and its result are shown as below. Considering the overall performance, the efficiency: vectorized version $>$ one-loop version $>$ two-loop version. (For $n=4000$, the execution time of vectorized version is a little bit longer than that of one-loop version, maybe some environmental issues or something occured.)
 \inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{octave}{test_time.m}
+\begin{figure}[H]
+    \centering\includegraphics[width=0.6\linewidth]{tic.png}
+    \caption{The results}
+\end{figure}
 \subsection*{(iv)}
 I found that the vectorized implementation significantly outperformed the looped versions because it avoids the interpreter overhead associated with element-by-element processing. 
 
 According to the Octave manual, vectorization allows the program to bypass high-level interpretation and utilize optimized internal C++, C, or Fortran libraries that leverage hardware vector instructions. The goal of vectorization is to write code that is making loops less (like for and while), instead, use whole array operations which is more efficient.
 
 This approach achieved the 10X–100X speedup typical of Octave’s matrix-oriented design. In contrast, my two-loop and one-loop versions were slower because Octave had to re-evaluate the code and check data types for every individual iteration. (one loop is faster than two-loop because the column addition also utilize the technique of vectorization)
-\subsection*{(v)}
+% \subsection*{(v)}
 
 
 \end{document}
