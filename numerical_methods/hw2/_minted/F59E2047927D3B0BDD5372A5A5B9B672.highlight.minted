@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }A\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{generate\PYGZus{}spd}\PYG{p}{(}n\PYG{p}{)}
+\PYG{+w}{    }\PYG{c}{\PYGZpc{} Generate an n x n symmetric positive definite matrix}
+\PYG{+w}{    }\PYG{n}{X}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{randn}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}\PYG{+w}{ }
+\PYG{+w}{    }\PYG{n}{A}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{X}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{X}\PYG{o}{\PYGZsq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{n}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nb}{eye}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{k}{end}
+\end{MintedVerbatim}

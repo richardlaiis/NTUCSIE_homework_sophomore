@@ -1,0 +1,20 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }L\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{chol\PYGZus{}twoloop}\PYG{p}{(}A\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{n}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{L}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{for}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+\PYG{+w}{        }\PYG{n+nb}{alpha}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{        }\PYG{n}{L}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n+nb}{alpha}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{n}
+\PYG{+w}{            }\PYG{n}{v}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{            }\PYG{n}{L}\PYG{p}{(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{v}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{L}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{            }\PYG{c}{\PYGZpc{} Two\PYGZhy{}level loop: Update each element B(i,j)}
+\PYG{+w}{            }\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+\PYG{+w}{                    }\PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v}\PYG{p}{(}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{n}{k}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n+nb}{alpha}\PYG{p}{);}
+\PYG{+w}{                }\PYG{k}{end}
+\PYG{+w}{            }\PYG{k}{end}
+\PYG{+w}{        }\PYG{k}{end}
+\PYG{+w}{    }\PYG{k}{end}
+\PYG{k}{end}
+\end{MintedVerbatim}

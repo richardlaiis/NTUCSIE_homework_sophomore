@@ -110,10 +110,10 @@ And then by adding a $n\times n$ identity matrix times a positive constant, we c
     \caption{The correctness of my three implementations of cholesky factorization (proved by built-in \texttt{chol()})}
 \end{figure}
 \subsection*{(iii)}
-I used meow1 (with GPU) in CSIE workstation, and the code for testing and its result are shown as below. Considering the overall performance, the efficiency: vectorized version $>$ one-loop version $>$ two-loop version. (For $n=4000$, the execution time of vectorized version is a little bit longer than that of one-loop version, maybe some environmental issues or something occured.)
+I used meow1 (with GPU) in CSIE workstation, and the code for testing and its result are shown as below. For small to medium matrix sizes (such as $n=10,100,1000$), the vectorized version is faster than the one-loop version, while the two-loop version is much slower. However, for $n=4000$, the performance order changes to one-loop $>$ vectorized $>$ two-loop. Therefore, the fastest method depends on matrix size, and for very large matrices the one-loop version can outperform the vectorized implementation.
 \inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{octave}{test_time.m}
 \begin{figure}[H]
-    \centering\includegraphics[width=0.6\linewidth]{tic.png}
+    \centering\includegraphics[width=0.7\linewidth]{tic.png}
     \caption{The results}
 \end{figure}
 \subsection*{(iv)}
@@ -121,8 +121,64 @@ I found that the vectorized implementation significantly outperformed the looped
 
 According to the Octave manual, vectorization allows the program to bypass high-level interpretation and utilize optimized internal C++, C, or Fortran libraries that leverage hardware vector instructions. The goal of vectorization is to write code that is making loops less (like for and while), instead, use whole array operations which is more efficient.
 
-This approach achieved the 10X–100X speedup typical of Octave’s matrix-oriented design. In contrast, my two-loop and one-loop versions were slower because Octave had to re-evaluate the code and check data types for every individual iteration. (one loop is faster than two-loop because the column addition also utilize the technique of vectorization)
+For small to medium matrices, this approach can achieve the typical speedup of Octave's matrix-oriented design, because vectorized operations call optimized low-level BLAS/LAPACK routines and reduce interpreter overhead.
+
+However, for very large matrices (for example, $n=4000$ in my test), the vectorized version became slower than the one-loop version. This is mainly due to memory pressure: the vectorized rank-1 updates create large temporary arrays repeatedly, which increases memory traffic and cache misses. The one-loop version updates matrix columns directly, which is more cache-friendly and reduces temporary allocation cost.
+
+The two-loop version is still the slowest because it performs element-by-element updates, so loop control and interpreter overhead accumulate heavily. In summary, the Octave results are consistent with the MATLAB analysis: vectorization is best for smaller sizes, while one-loop can be better for large-scale problems where memory bandwidth becomes the bottleneck.
 % \subsection*{(v)}
+
+\section{Matlab implementation (2(v))}
+The behind-scene theory and technique I used in this part is almost the same as that in octave, so I don't further explain how these codes work here.
+\subsection{Symmetric positive difinite matrix}
+\begin{figure}[H]
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{matlab}{matlab/generate_spd.m}
+\caption{The function for generating Symmetric positive difinite matrix (using MATLAB)}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{matlab_pic/spd.png}
+    \caption{By using \texttt{eig()} function, we can found all eigenvalues are positive for real.}
+\end{figure}
+\subsection{Cholesky decomposition (3 methods)}
+\begin{figure}[H]
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{matlab}{matlab/chol_vectorized.m}
+\caption{Vectorized Cholesky decomposition implementation (using MATLAB)}
+\end{figure}
+\begin{figure}[H]
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{matlab}{matlab/chol_oneloop.m}
+\caption{One-loop Cholesky decomposition implementation (using MATLAB)}
+\end{figure}
+\begin{figure}[H]
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{matlab}{matlab/chol_twoloop.m}
+\caption{Two-loop Cholesky decomposition implementation (using MATLAB)}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{matlab_pic/verify.png}
+    \caption{The correctness of my three codes by \texttt{chol()} function}
+\end{figure}
+\subsection{Efficiency analysis}
+I tested the three Cholesky factorization implementations in MATLAB (using the MATLAB Online free plan) for $n \in \{10, 100, 1000, 2000, 4000\}$. The timing results revealed a significant shift in performance efficiency as the matrix size $n$ increased.
+
+For small to medium matrices ($n \le 1000$), the \textbf{Vectorized} version was the fastest. Because the matrices are relatively small, the memory required to perform the operations easily fits into the CPU's high-speed L1/L2 cache. Consequently, the vectorized code fully benefits from MATLAB's underlying highly-optimized numerical libraries (such as BLAS and LAPACK) and bypasses the interpreter overhead associated with loop management.
+
+However, for massive matrices ($n = 4000$), the performance inverted entirely: the \textbf{One-loop} version was the fastest ($\approx 37.1$ s), the \textbf{Two-loop} version was second ($\approx 65.8$ s), and the \textbf{Vectorized} version was the slowest by a wide margin ($\approx 113.7$ s). This occurs due to the interplay between memory bandwidth and compiler optimization:
+
+\begin{itemize}
+    \item \textbf{Why One-loop outperforms Vectorized (The Memory Bottleneck):} The vectorized update formula computes the outer product $vv^T$, generating a massive temporary matrix (up to $4000 \times 4000$) during every single iteration. Continuously allocating, writing, and clearing this large block of memory forces the CPU to constantly fetch data from the slower main RAM, causing severe cache thrashing. The One-loop version avoids this by updating the matrix column-by-column. A single column easily fits into the CPU cache, eliminating the memory bandwidth bottleneck.
+    
+    \item \textbf{Why One-loop outperforms Two-loop (JIT and Interpreter Overhead):} While both looped versions avoid creating massive temporary matrices, the Two-loop updates the matrix element-by-element. Even though modern MATLAB features a Just-In-Time (JIT) compiler to accelerate loops, managing the loop conditions and array bounds for millions of individual $A(i,j)$ elements still introduces noticeable computational overhead. The One-loop version hits the optimal "sweet spot": it processes cache-friendly chunks of data (columns) while still utilizing low-level, optimized vector operations for each column update.
+\end{itemize}
+\begin{figure}[H]
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,linenos, breaklines]{matlab}{matlab/test_time_matlab.m}
+\caption{Performance testing script for Matlab implementations (using MATLAB)}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{matlab_pic/tt.png}
+    \caption{The execution time tests for Vectorized, One-loop, Two-loop version of Cholesky decomposition}
+\end{figure}
 
 
 \end{document}
