@@ -14,7 +14,7 @@ signed main() {
 	}
 	fin.close();
 
-    vector<int> res(n);
+    vector<double> res(n);
     for (int i = 0; i < n; i++) {
         double block = 0;
         for (int j = 0; j < n; j++) {
