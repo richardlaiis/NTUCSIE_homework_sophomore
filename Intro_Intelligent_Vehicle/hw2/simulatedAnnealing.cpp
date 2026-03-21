@@ -131,6 +131,7 @@ int main() {
 
         temperature *= alpha;
     }
+    //
 
     for (int i = 0; i < n; i++) {
         printf("%d\n", bestP[i]);
