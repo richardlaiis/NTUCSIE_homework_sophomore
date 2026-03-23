@@ -100,4 +100,38 @@ We have $[L:K]=[G:P]=\frac{|G|}{|P|}=\frac{p^am}{p^a}=m$, since we assume $m>1,p
 
 Hence, $|G|=[N:K]=p^a$. By the tower law, $[N:K]=[N:E][E:K]$ and $[E:K]>1$, $[E:K]$ must be some power of $p$, completes the proof.
 
+\section{}
+Let $G=\mathrm{L/K}$ be the Galois group, by definition $|G|=[L:K]=p^m$.
+
+We claim that there exists a sequence of subgroups $G=H_0\supsetneq H_1\supsetneq \dots\supsetneq H_m=\{e\}$ such that for every $1\le i\le m$:
+\begin{enumerate}
+    \item $H_i\triangleleft G$
+    \item $[H_{i-1}:H_i]=p$
+\end{enumerate}
+Let's prove the claim by induction. For the base case ($m=1$), $|G|=p$, by lagrange theorem $H_m$ must be trivial, and the two statements are satisfied.
+
+Assume the lemman holds for all p-group of order $p^{m-1}$ ($m>1$), because $G$ is non-trivial p-group, by class equation:
+$$|G|=|Z(G)|+\sum{[G:C_G(x_i)]}$$
+where $x_i$'s belong to distinct conjugacy classes and not in $Z(G)$, since the terms within the sum are all some power of $p$, so is $|G|$, we know $p\mid|Z(G)|$, the center of $G$ is not trivial.
+
+By Cauchy's theorem, $Z(G)$ contains an element of order $p$, which can generate a cyclic group $N$ of order $p$, and obviously $N\triangleleft G$.
+
+Consider the quotient group $G/N$, which has order $p^{m-1}$. By our inductive hypothesis, $G/N$ contains a chain of normal subgroups:
+$$G/N=\overline{H_0}\supsetneq \overline{H_1}\supsetneq\ldots\supsetneq \overline{H_{m-1}}=\{e\}$$
+such that each $\overline{H_i}\triangleleft G/N$ and $[\overline{H_{i-1}}:\overline{H_{i}}]=p$.
+
+By the fourth isomorphism theorem (correspondance theorem), each quotient corresponds uniquely to a subgroup of $H_i$ of $G$ containing $N$. Because $\overline{H_i}$ is normal in $G/N$, its corresponding preimage $H_i$ is normal in $G$. Furthermore, the index is preserved, $[H_{i-1}:H_i]=[\overline{H_{i-1}}:\overline{H_i}]$. The mapping details can be seen \href{https://en.wikipedia.org/wiki/Correspondence_theorem}{here}. By some observation, we know $H_{m-1}=N$, set $H_{m}={e_G}$, we have $[H_{m-1}:H_m]=p$, completes our induction. \textbf{The claim is proved so perfectly!}  
+
+Now define $K_i$ to be the fixed field of $H_i$, by the Galois correspondance we have the chain:
+$$K=K_0\subsetneq K_1\subsetneq\ldots K_m=L$$
+$K_i/K$ is Galois if and only if $\mathrm{Gal}(K_i/K)\triangleleft G$, since our lemma explicitly construct each $H_i\triangleleft G$, so the second statement is True.
+
+Using tower law for the extensions $K_{i-1}\subsetneq K_{i}\subseteq L$, we have:
+$$[L:K_{i-1}]=[L:K_{i}][K_{i}:K_{i-1}]$$
+
+So, $|H_{i-1}|=|H_i|[K_{i}:K_{i-1}]$. We have $[K_{i}:K_{i-1}]=[H_{i-1}:H_i]=p$, completing the proof.
+
 \end{document}
+
+% some proof is inspired by gemini :p
+% https://gemini.google.com/share/261cc8d9ce67
