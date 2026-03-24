@@ -11,3 +11,7 @@
 4. https://math.ntnu.edu.tw/~li/galois-html/chap3.pdf
 5. https://faculty.etsu.edu/gardnerr/4127/notes/X-49.pdf
 ## 5
+1. https://gemini.google.com/share/37caef986eed
+2. https://proofwiki.org/wiki/Dihedral_Group_D4/Subgroups
+3. https://chatgpt.com/share/69c234f4-5c44-8011-920e-ccb0ddc44a79
+4. Cool thing to look at: [Field trace](https://en.wikipedia.org/wiki/Field_trace)
