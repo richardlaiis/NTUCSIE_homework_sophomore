@@ -4,3 +4,5 @@
 *.log
 *.out
 *.synctex.gz
+.venv/
+numerical_methods/hw3/matrix
