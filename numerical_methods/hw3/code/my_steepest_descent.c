@@ -57,6 +57,24 @@ void steepest_descent(double *A, double *b, double *x, int n) {
     free(Ax);
 }
 
+void write_vector(char *path, double *v, int n) {
+    FILE *fp = fopen(path, "w");
+    for (int i = 0; i < n; i++) {
+        fprintf(fp, "%f\n", v[i]);
+    }
+    fclose(fp);
+}
+
+void write_matrix(char *path, double *A, int n) {
+    FILE *fp = fopen(path, "w");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            fprintf(fp, "%f%c", A[i*n+j], " \n"[j==n-1]);
+        }
+    }
+    fclose(fp);
+}
+
 void print_vector(double *v, int n) {
     for (int i = 0; i < n; i++) {
         printf("%f ", v[i]);
@@ -86,6 +104,10 @@ int main(int argc, char **argv) {
     double *Ax = (double *)malloc(n * sizeof(double));
     cblas_dgemv(CblasRowMajor, CblasNoTrans, n, n, 1.0, A, n, x, 1, 0.0, Ax, 1);
     print_vector(Ax, n);
+
+    write_matrix("A", A, n);
+    write_vector("x", x, n);
+    write_vector("b", b, n);
 
 
 }
