@@ -52,14 +52,47 @@
 \section{Intersection Management: Part I}
 
 \subsection*{1.}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.6\linewidth]{2-1.jpg} 
+   \caption{The timing conflict graph}
+\end{figure}
 \subsection*{2.}
+The following graph gives an acyclic solution containing DEADLOCK. The scheduling should be like:
+\begin{enumerate}
+    \item vehicle 2 enter zone 2, then enter zone 3, then waits for zone 1.
+    \item vehicle 4 enter zone 1, then leaves.
+    \item vehicle 1 enters zone 1, then waits for zone 2.
+    \item vehicle 3 enters zone 2, then waits for zone 3.
+\end{enumerate}
+
+which is trivially a case of DEADLOCK.
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.6\linewidth]{2-2a.jpg} 
+   \caption{An example of deadlock}
+\end{figure}
+
+We can also construct the resource conflict graph, and we will notice that there exists one cycle. ($(1,1,2)\rightarrow (2,3,1)\rightarrow (3,2,3)\rightarrow(1,1,2)$) Hence, there's a DEADLOCK. 
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.6\linewidth]{2-2b.jpg} 
+   \caption{The resource conflict graph of this example}
+\end{figure}
 
 
 
 
 \newpage
 \section{Intersection Management: Part II}
+When the entire intersection is modeled as one conflict zone, every vehicle $i$ has exactly one node $(i,1)$ in the timing conflict graph $G$. This has two consequences:
+\begin{enumerate}
+    \item No Type-1 edges exist: Type-1 edges connect consecutive conflict zones of the same vehicle, but with only one zone, no vehicle has consecutive zones. So the only edges in $G$ are Type-2 (same lane) and Type-3 (different lanes).
+    \item The resource conflict graph $H'$ is always empty. All five construction rules (Rules 1-5) require at least one vehicle to have two consecutive conflict zones in order to generate an $H'$ node of the form $(i,j,j')$. With a single conflict zone, this prerequisite is never met. Therefore $H'$ has no nodes and no edges, it is trivially acyclic, and deadlock-freeness is automatically guaranteed.
+    \item Expressiveness is severely limited. Since any two vehicles from different lanes share the only conflict zone, the Type-3 edges in $G'$ form a total ordering of all vehicles. Only one vehicle may be in the intersection at a time, regardless of whether their actual paths would physically conflict (e.g., a right turn vs. a straight-through would still be serialized unnecessarily).
+\end{enumerate}
 
+We can use any total-ordering policy: FCFS, priority-based, etc. to assign a strict sequence to all vehicles. Because $H'$ is always empty, no deadlock-verification step is needed at all. This is precisely what a stop sign implements: vehicles queue and take turns one at a time. The cost is minimal throughput; the benefit is trivial safety and correctness guarantees.
 
 
 
@@ -67,6 +100,27 @@
 
 \newpage
 \section{Intersection Management: Part III}
+\paragraph{The Conditions:}
+The condition to simplify the rules is to guarantee that every vehicle involved in a conflict has a preceding zone and a succeeding zone relative to that conflict zone. In a system model, this condition can be universally satisfied by padding the beginning and end of every vehicle's trajectory with ``dummy'' (or virtual) source and sink zones. By doing this, every actual physical conflict zone inside the intersection is treated strictly as an internal node.
+
+\paragraph{The Two Rules:}
+Under this condition, we only need to apply \textbf{Rule 1} and \textbf{Rule 2} to construct the resource conflict graph $H'$ from the timing conflict graph $G$.
+\begin{itemize}
+    \item \textbf{Rule 1 (Continuous Movement):} This rule links a single vehicle's transitions together to ensure its path remains continuous. For a vehicle $i$ traveling from zone $j'$ to $j$, and then from $j$ to $j''$, we connect its arrival transition to its departure transition:
+    \[
+    v_{i, j', j} \rightarrow v_{i, j, j''}
+    \]
+    
+    \item \textbf{Rule 2 (Conflict Resolution):} This rule enforces the timing priority when two vehicles compete for the same resource. If vehicle $i$ has priority over vehicle $k$ at conflict zone $j$ (represented in $G$ as $v_{i, j} \dashrightarrow v_{k, j}$), we link their departure transitions. This strictly requires vehicle $i$ to transition out of $j$ before vehicle $k$ is allowed to transition out of $j$:
+    \[
+    v_{i, j, j''} \rightarrow v_{k, j, j^{**}}
+    \]
+\end{itemize}
+
+\paragraph{The Benefits:}
+By introducing the dummy zone condition, we convert all boundary scenarios into internal transitions, completely eliminating the need for \textbf{Rule 4} and \textbf{Rule 5} (which exist solely to handle the edge cases of vehicles spawning or terminating without prior or subsequent zones). Additionally, because Rule 2 and Rule 3 both enforce priority equivalently, we only need one of them to detect cycles. Using only two rules heavily simplifies the graph construction algorithm, eliminates messy conditional logic needed for boundary checking, and makes the overall deadlock-freeness verification much more computationally efficient.
+
+Basically, we can realize rule 3, 4 and 5 using only rule 1 and 2 under our previously defined conditions.
 
 
 
@@ -75,10 +129,34 @@
 \newpage
 \section{Realization of Level-X Autonomy}
 
-\subsection*{1.}
-\subsection*{2.}
-\subsection*{3.}
+The realization of autonomous driving is not merely a technological timeline, but a complex intersection of hardware costs, legal liability, regulatory frameworks, and human trust. Below is an estimation of when each level will be broadly realized, accompanied by real-world examples and multi-disciplinary justifications.
 
+\subsection*{Level-3 Autonomy (Conditional Driving Automation)}
+\textbf{Estimated Realization:} Currently being realized in limited consumer markets (2024--2028).
+
+\textbf{Justification:} 
+From a \textit{technological} standpoint, sensor fusion (camera, radar, LiDAR) is mature enough to handle structured environments like highways. However, the primary bottleneck has been \textit{human comfort} and \textit{law}. Level 3 introduces the dangerous ``hand-over'' problem, where a distracted human must suddenly take control if the system fails. Because the manufacturer assumes legal liability while the system is active, many automakers bypassed Level 3 entirely. Slowly, \textit{regulatory} bodies are establishing frameworks to govern this liability.
+
+\textbf{Example:} 
+Mercedes-Benz’s \textit{Drive Pilot} system. It is the first internationally certified Level-3 system, legally approved to operate in jurisdictions like Nevada and California. Under specific conditions (e.g., highway traffic jams under 40 mph), the driver is legally permitted to take their eyes off the road to watch a movie or read, but must remain physically ready to take the wheel if the system prompts them.
+
+\subsection*{Level-4 Autonomy (High Driving Automation)}
+\textbf{Estimated Realization:} Currently realized in commercial fleets; widespread consumer ownership expected by 2030--2035.
+
+\textbf{Justification:} 
+Level 4 removes the human entirely, but only within a strict Operational Design Domain (ODD)—such as a geofenced city or specific weather conditions. \textit{Technologically}, this is viable today by relying on ultra-high-definition pre-mapped routes. The main barrier is \textit{cost}; the dense array of LiDAR and computing hardware required makes personal vehicle ownership prohibitively expensive. Therefore, the business model is currently restricted to commercial ridesharing. \textit{Regulations} are also heavily localized, requiring city-by-city approval.
+
+\textbf{Example:} 
+\textit{Waymo One} operates Level-4 fully autonomous robotaxis in cities like Phoenix, Los Angeles, and San Francisco. These vehicles operate with no human driver inside, but they are strictly bound by their ODD. If a Waymo vehicle encounters an unmapped construction zone or severe weather outside its programming, it will pull over and safely stop rather than ask for human help.
+
+\subsection*{Level-5 Autonomy (Full Driving Automation)}
+\textbf{Estimated Realization:} Several decades away (2050 or beyond).
+
+\textbf{Justification:} 
+Level 5 implies that the vehicle can drive anywhere a human can, under any conditions, without an ODD. \textit{Technologically}, this requires a leap from advanced machine learning to something resembling Artificial General Intelligence (AGI). The system must possess human-like reasoning to negotiate unwritten social rules of driving (e.g., making ``eye contact'' with a pedestrian, or interpreting a traffic cop's hand gestures). The \textit{legal} implications of a globally operating autonomous system and the \textit{human trust} required to sleep in a car hurtling through a severe snowstorm make this a distant reality.
+
+\textbf{Example:} 
+No current system is close to this. A true Level-5 vehicle would need to seamlessly transition from navigating a perfectly marked highway in sunny California to safely traversing an unmapped, chaotic intersection in Mumbai during a monsoon, all without any remote assistance or prior mapping.
 
 \end{document}
 % how to display codes?
