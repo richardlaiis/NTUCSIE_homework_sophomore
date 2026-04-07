@@ -1,0 +1,30 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+sudo\PYG{+w}{ }pacman\PYG{+w}{ }\PYGZhy{}S\PYG{+w}{ }intel\PYGZhy{}oneapi\PYGZhy{}mkl,\PYG{+w}{ }openblas,\PYG{+w}{ }cblas
+\PYG{n+nb}{export}\PYG{+w}{ }\PYG{n+nv}{MKL\PYGZus{}NUM\PYGZus{}THREADS}\PYG{o}{=}\PYG{l+m}{1}
+\PYG{n+nb}{export}\PYG{+w}{ }\PYG{n+nv}{OMP\PYGZus{}NUM\PYGZus{}THREADS}\PYG{o}{=}\PYG{l+m}{1}
+\PYG{n+nb}{export}\PYG{+w}{ }\PYG{n+nv}{OPENBLAS\PYGZus{}NUM\PYGZus{}THREADS}\PYG{o}{=}\PYG{l+m}{1}
+\PYG{n+nb}{source}\PYG{+w}{ }/opt/intel/oneapi/setvars.sh
+
+\PYG{n+nb}{cd}\PYG{+w}{ }\PYGZti{}
+git\PYG{+w}{ }clone\PYG{+w}{ }https://github.com/flame/blis.git
+\PYG{n+nb}{cd}\PYG{+w}{ }blis/
+./configure\PYG{+w}{ }\PYGZhy{}\PYGZhy{}enable\PYGZhy{}cblas\PYG{+w}{ }auto
+make
+sudo\PYG{+w}{ }make\PYG{+w}{ }install
+\PYG{n+nb}{export}\PYG{+w}{ }\PYG{n+nv}{BLIS\PYGZus{}NUM\PYGZus{}THREADS}\PYG{o}{=}\PYG{l+m}{1}
+\PYG{n+nb}{cd}\PYG{+w}{ }../code/
+
+gcc\PYG{+w}{ }\PYGZhy{}I\PYG{+w}{ }/usr/local/include/blis\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent.c\PYG{+w}{ }\PYGZhy{}O2\PYG{+w}{ }\PYGZhy{}Wall\PYG{+w}{ }\PYGZhy{}Wextra\PYG{+w}{ }\PYGZhy{}std\PYG{o}{=}gnu11\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent\PYG{+w}{ }/usr/local/lib/libblis.a\PYG{+w}{ }\PYGZhy{}lm
+
+gcc\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent.c\PYG{+w}{ }\PYGZhy{}O2\PYG{+w}{ }\PYGZhy{}Wall\PYG{+w}{ }\PYGZhy{}Wextra\PYG{+w}{ }\PYGZhy{}std\PYG{o}{=}gnu11\PYG{+w}{ }\PYGZhy{}lmkl\PYGZus{}rt\PYG{+w}{ }\PYGZhy{}lm\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent
+
+gcc\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent.c\PYG{+w}{ }\PYGZhy{}O2\PYG{+w}{ }\PYGZhy{}Wall\PYG{+w}{ }\PYGZhy{}Wextra\PYG{+w}{ }\PYGZhy{}std\PYG{o}{=}gnu11\PYG{+w}{ }\PYGZhy{}lopenblas\PYG{+w}{ }\PYGZhy{}lm\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent
+
+gcc\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent.c\PYG{+w}{ }\PYGZhy{}O2\PYG{+w}{ }\PYGZhy{}Wall\PYG{+w}{ }\PYGZhy{}Wextra\PYG{+w}{ }\PYGZhy{}std\PYG{o}{=}gnu11\PYG{+w}{ }\PYGZhy{}lcblas\PYG{+w}{ }\PYGZhy{}lm\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }my\PYGZus{}steepest\PYGZus{}descent
+
+curl\PYG{+w}{ }\PYGZhy{}LsSf\PYG{+w}{ }https://astral.sh/uv/install.sh\PYG{+w}{ }\PYG{p}{|}\PYG{+w}{ }sh
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}HOME}/.local/bin/env
+uv\PYG{+w}{ }venv\PYG{+w}{ }matrix
+\PYG{n+nb}{source}\PYG{+w}{ }matrix/bin/activate
+uv\PYG{+w}{ }pip\PYG{+w}{ }install\PYG{+w}{ }scipy,\PYG{+w}{ }numpy
+\end{MintedVerbatim}

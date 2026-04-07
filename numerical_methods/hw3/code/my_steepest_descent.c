@@ -1,3 +1,4 @@
+// my_steepest_descent.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
