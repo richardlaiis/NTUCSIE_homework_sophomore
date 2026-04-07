@@ -23,15 +23,6 @@ void generate_vector(double *v, int n) {
     for (int i = 0; i < n; i++) v[i] = random_0_to_1();
 }
 
-void print_matrix(double *A, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%f ", A[i*n+j]);
-        }
-        printf("\n");
-    }
-}
-
 void steepest_descent(double *A, double *b, double *x, int n) {
     double *r = (double *)malloc(n * sizeof(double));
     double *Ar = (double *)malloc(n * sizeof(double));
@@ -75,13 +66,6 @@ void write_matrix(char *path, double *A, int n) {
     fclose(fp);
 }
 
-void print_vector(double *v, int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%f ", v[i]);
-    }
-    printf("\n");
-}
-
 int main(int argc, char **argv) {
     int n = 100;
     if (argc > 1) {
@@ -97,13 +81,8 @@ int main(int argc, char **argv) {
     generate_vector(b, n);
     steepest_descent(A, b, x, n);
 
-    print_matrix(A, n);
-    print_vector(b, n);
-    print_vector(x, n);
-
     double *Ax = (double *)malloc(n * sizeof(double));
     cblas_dgemv(CblasRowMajor, CblasNoTrans, n, n, 1.0, A, n, x, 1, 0.0, Ax, 1);
-    print_vector(Ax, n);
 
     write_matrix("A", A, n);
     write_vector("x", x, n);
