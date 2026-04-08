@@ -2,26 +2,14 @@
 \usepackage{graphicx}
 \usepackage[margin=2cm, a4paper]{geometry}
 \usepackage{setspace}
-\usepackage{pdfpages}
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{fancyvrb}
 \usepackage{amssymb}
 \usepackage{minted}
 \usepackage{enumitem}
-\usepackage[colorlinks,linkcolor=blue]{hyperref}
-\usepackage{coffeestains}
 
 
-\renewcommand{\contentsname}{Contents}
-\renewcommand{\figurename}{Figure}
-\renewcommand{\tablename}{Table}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
 \newcommand{\mytitle}{Abstract Algebra II Homework 4}
 \newcommand{\myauthor}{B13902022 LAI,YU-CHI}
 
@@ -32,11 +20,10 @@
 \fancyhead[R]{\myauthor}
 
 \usepackage[english]{babel}
+\usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
-
-\usepackage{amsthm}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \theoremstyle{remark}
@@ -48,13 +35,41 @@
 
 \begin{document}
 \maketitle
-\coffeestainC{0.8}{1.05}{45}{5cm}{10cm}
 
-\noindent\texttt{\textbackslash usepackage\{coffeestains\}}
 \section{}
-\section{}
-\section{}
-\section{}
-\section{}
+\begin{lemma}
+Suppose $G$ is an finite abelian group, $x,y,\in G$, and $|x|=r$ and $|y|=s$. Then there exists an element of $G$ which has order $\mathrm{lcm}(r,s)$.
+\end{lemma}
+\begin{proof}
+First, suppose that $\gcd{(r,s)}=1$, then $\mathrm{lcm}(r,s)=\frac{rs}{\gcd{(rs)}}=rs$. Given that $|x|=r$ and $|y|=s$, consider $z=xy$, then $z^{rs}=x^{rs}y^{rs}=e$, we have $|z|\mid rs$ (so $|z|\le rs$). 
 
+Let $|z|=m$, so $e=e^s=z^{ms}=x^{ms}y^{ms}=x^{ms}$, we have $r\mid ms$. Similarily, $e=e^r=z^{mr}=x^{mr}y^{mr}=y^{mr}$, we have $s\mid mr$. But $\gcd{(r,s)}=1$, so $r\mid m$ and $s\mid m$, the result implies $rs\mid m$. Hence, $|m|\ge rs$. But also $|m|\le rs$, so $|z|=m=rs=\mathrm{lcm}(r,s)$.
+
+We now consider the general case, we can decompose $r$ as a product $r=r_1r_2r_3r_4$ as follows:
+
+\begin{itemize}
+    \item $r_1=$the product of all prime factors of $r$ which aren't prime factors of $s$.
+    \item $r_2=$the product of all prime factors of $r$ which have equal power in $r$ and $s$.
+    \item $r_3=$the product of all prime factors of $r$ which have higher power than those in $s$.
+    \item $r_4=$the product of all prime factors of $r$ which have lower power than those in $s$.
+\end{itemize}
+Define $s=s_1s_2s_3s_4$ similarily, with $r$ and $s$ in exchanged places. And we have $\mathrm{lcm}(r,s)=r_1r_2r_3s_1s_3$ and $\gcd{(r_1r_2r_3, s_1s_3)}=1$. Now $|x^{r_4}|=r_1r_2r_3$ and $|y^{s_2s_4}|=s_1s_3$, if we consider the two elements: $x^{r_4}$ and $y^{s_2s_4}$, $|x^{r_4}y^{s_2s_4}|=r_1r_2r_3s_1s_3=\mathrm{lcm}(r,s)$ (trivially $x^{r_4}y^{s_2s_4}\in G$) by the first part of the proof. So there exists an element of $G$ which has order $\mathrm{lcm}(r,s)$.
+\end{proof}
+
+Let $|K^\ast|=m$. Suppose $\alpha\in K^\ast$ has the maximal order under multiplication over all elements in $K^\ast$. Let $|\alpha|=k$, by Lagrange's theorem, $k\mid m$ and $k\le m$.
+
+Consider another elements $\beta\in K^\ast$ with order $r$, by lemma 1.1, there exists an element of order $\mathrm{lcm}(r,k)\ge k$, but due to the maximality, we must have $\mathrm{lcm}(r,k)=k$. Clearly, $r|k$, and $\beta^k=e$ (where $e$ is the multiplicative identity in $K^\ast$). Since $\beta$ is chosen arbitrarily, we have every element's $k$-th power is the identity, i.e., satisfies the equation $x^k-1=0$. Therefore, $x^k-1=0$ has at least $m$ distinct roots, and a polynimial of degree $k$ over some fields has at most $k$ roots in that field. So we have $m\le k$, combined with our previous result we know $m=k$. 
+
+Since $|\alpha|=m=|K^\ast|$, $\alpha$ generates the whole group $K^\ast$ (Here, the group is defined under multiplication, since in the multiplicative group of $K$, the zero is excluded, every element is unit, thus having its inverse. The closedness is trivial since the $K$ is a field, where $K=K^\ast\cup \{0\}$), $K^\ast$ is cyclic.
+
+\section{}
+Let $E$ be $n$-dimensional extension of the finite field $K$ (Let $|K|=q$). Because $E$ acts like an $n$-dimensional vector space over $K$ (which has $q$ elements), the field $E$ must contain exactly $q^n$ elements.
+
+The nonzero elements of $E$ form a multiplicative group $E^{\times}=E\backslash \{0\}$, it contains $q^n-1$ elements, i.e., $|E^{\times}|=q^n-1$.
+
+By Lagrange's Theorem, the order of every element in $E^{\times}$ must divides the $|E^{\times}|$. Hence, if $\alpha\in E^{\times}$, we have $|\alpha|\mid (q^n-1)$, thus $\alpha^{q^n-1}=1\Rightarrow \alpha^{q^n-1}-1=0\Rightarrow \alpha^{q^n}-\alpha=0$.
+
+Hence, every element of $E^{\times}$ is the root of $x^{q^n}-x=0$, even the zero satisfies it. We obtain that every element of $E$ is a root of $x^{q^n}-x=0$, also every polynimial of degree $q^n$ has at most $q^n$ distinct, which is equal to the order of $E$. Therefore, $E$ is the splitting field of $x^{q^n}-x$.
+
+Since both $K_1$ and $K_2$ are the splitting field of the same polynimial ($x^{q^n}-x$), they are isomorphic.
 \end{document}
