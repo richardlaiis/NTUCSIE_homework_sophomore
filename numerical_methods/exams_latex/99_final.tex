@@ -1,0 +1,134 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+\begin{center}
+    \Large \textbf{Numerical Methods} \\
+    \Large \textbf{Midterm 3} \\
+    \large June 14, 2011
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item Please give details of your calculation. A direct answer without explanation is not counted.
+    \item Your answers must be in English.
+    \item Please carefully read problem statements.
+    \item During the exam you are not allowed to borrow other's class note.
+    \item Try to work on easier questions first.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\section*{Problem 1 (10\%)}
+
+Given the following linear system
+\begin{equation}
+Ax = 
+\begin{bmatrix}
+3 & 1 & 1 \\
+1 & 2 & 1 \\
+1 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix}
+= b = 
+\begin{bmatrix}
+1 \\
+1 \\
+1
+\end{bmatrix}
+\label{eq:1}
+\end{equation}
+
+\begin{enumerate}
+    \item Is the matrix $A$ symmetric positive definite?
+    \item Find the solution of \eqref{eq:1} by any method.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 2 (35\%)}
+
+\begin{enumerate}
+    \item Do the first CG iteration to solve \eqref{eq:1}.
+    \item Do the second CG iteration to solve \eqref{eq:1}.
+    \item Do the third CG iteration to solve \eqref{eq:1}.
+    \item We would like to study how the direction $p_3$ of the third iteration is obtained. Put your obtained $r_2$, $p_1$ and $p_2$ into the following problem and solve
+    \[
+    \min_{p} \| p - r_2 \|^2 
+    \]
+    \[
+    \text{subject to } p \in \{ Ap_1, Ap_2 \}^\perp.
+    \]
+    Explain your findings.
+\end{enumerate}
+
+\noindent \textbf{Hint:} the calculation may be complicated. However, you should know how to check results after each iteration. Then this task will not be that difficult.
+
+\vspace{0.5cm}
+
+\section*{Problem 3 (15\%)}
+
+In deriving the direction $p_k$ of conjugate gradient method, we use a lemma to know that we need to solve
+\[
+\min_{z} \| r_{k-1} - AP_{k-1}z \|.
+\]
+Then after some derivations, we have that
+\begin{equation}
+\| r_{k-1} - AP_{k-1}z \|^2 = \left(1 + \frac{\mu}{\alpha_{k-1}}\right)^2 \| r_{k-1} \|^2 + \left\| - \frac{\mu}{\alpha_{k-1}} r_{k-2} - AP_{k-2}w \right\|^2, \label{eq:2}
+\end{equation}
+where 
+\[
+z = \begin{bmatrix} w \\ \mu \end{bmatrix}
+\]
+Formally prove that if $w, \mu$ are the optimal solution of minimizing \eqref{eq:2}, then $-w / (\mu/\alpha_{k-1})$ must be the solution of
+\[
+\min_{z} \| r_{k-2} - AP_{k-2}z \|.
+\]
+
+\vspace{0.5cm}
+
+\section*{Problem 4 (15\%)}
+
+Given any linear system
+\begin{equation}
+Ax = b, \label{eq:3}
+\end{equation}
+with $A$ symmetric positive definite. Assume now we solve
+\begin{equation}
+P^T A P x = P^T b, \label{eq:4}
+\end{equation}
+instead, where $P$ is a permutation matrix.
+
+\begin{enumerate}
+    \item If we apply CG to solve both \eqref{eq:3} and \eqref{eq:4}, will the number of iterations be different? We assume exact operations without any numerical errors. We also assume that the stopping condition is when the exact solution of \eqref{eq:3} or \eqref{eq:4} has been found.
+    \item How about vectors $r_k$, $p_k$ and scalars $\alpha_k$, $\beta_k$? If they are changed, what are the new values?
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 5 (25\%)}
+
+Given three points $(1,3)$, $(2,1)$, and $(3,3)$. Find the spline approximation. Draw a figure to show how $s_j(x)$ looks like.
+
+\begin{enumerate}[(a)]
+    \item Consider the following boundary condition:
+    \[
+    s_0''(x_0) = 0 \quad \text{and} \quad s_{n-1}''(x_n) = 0
+    \]
+    \item Consider the following boundary condition:
+    \[
+    s_0'(x_0) = -1 \quad \text{and} \quad s_{n-1}'(x_n) = 1
+    \]
+\end{enumerate}
+
+\end{document}

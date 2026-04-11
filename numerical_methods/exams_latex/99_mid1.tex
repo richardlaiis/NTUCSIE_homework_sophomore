@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{CJKutf8}
+
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+
+\noindent \textbf{試題 :}
+
+\begin{itemize}
+    \item Please give details of your calculation. A direct answer without explanation is not counted.
+    \item Your answers must be in English.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\section*{Problem 1 (15\%)}
+What is the bit string of $-37$ under IEEE 754 standard? We assume single precision. Please explain details instead of just giving a string.
+
+\vspace{0.5cm}
+
+\section*{Problem 2 (30\%)}
+Consider the following matrix:
+\[
+A = \begin{bmatrix}
+1 & 4 & 7 \\
+2 & 5 & 8 \\
+3 & 6 & 10
+\end{bmatrix}
+\]
+We would like to find the LU factorization using the pivoting.
+
+\begin{enumerate}
+    \item[(a)] Give all details of finding
+    \[ M_{n-1} P_{n-1} \dots M_1 P_1 A = U \]
+    
+    \item[(b)] Find $P$ such that
+    \begin{equation}
+    PA = LU \label{eq1}
+    \end{equation}
+    where $L$ and $U$ are lower- and upper-triangular matrices, respectively.
+    
+    \item[(c)] If we solve the linear system
+    \[
+    Ax = b = \begin{bmatrix} 6 \\ 9 \\ 12 \end{bmatrix}
+    \]
+    show how to use (1) to solve the linear system.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 3 (20\%)}
+Consider the following matrix:
+\[
+A = \begin{bmatrix}
+16 & 8 & 4 & 12 \\
+8 & 8 & 0 & 2 \\
+4 & 0 & 27 & 0 \\
+12 & 2 & 0 & 30
+\end{bmatrix}
+\]
+Generate the Cholesky factorization using the outer product form.
+
+\vspace{0.5cm}
+
+\section*{Problem 4 (20\%)}
+In exact arithmetic, the addition operation is commutative, i.e.,
+\[ x + y = y + x \]
+for any two numbers $x, y$ and also associative, i.e.,
+\[ x + (y + z) = (x + y) + z \]
+for any $x, y$ and $z$. Is the floating point addition operation commutative? Is it associative? We assume exact rounded operations.
+
+\vspace{0.5cm}
+
+\section*{Problem 5 (15\%)}
+What is the smallest positive denormalized number under the IEEE standard (single precision)?
+
+\end{CJK*}
+\end{document}

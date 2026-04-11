@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage[margin=1in]{geometry}
+\usepackage{CJKutf8}
+
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+
+\noindent \textbf{試題 :}
+
+\vspace{0.5cm}
+
+\section*{Problem 1 (15\%)}
+Given an $n \times n$ matrix $A$, what is
+\[
+\|A\|_\infty = \max_{\|x\|_\infty = 1} \|Ax\|_\infty \ ?
+\]
+That is, write $\|A\|_\infty$ as an expression of $A$'s elements.
+
+\vspace{0.5cm}
+
+\section*{Problem 2 (25\%)}
+Assume $A$ is symmetric and invertible. Formally prove that
+\[
+\text{cond}(A) \ge 1
+\]
+where $\text{cond}(\cdot)$ is the condition number. Assume 2-norm is used.
+
+\vspace{0.25cm}
+\noindent \textbf{Hint:} no need to check eigenvalues of matrices.
+
+\vspace{0.5cm}
+
+\section*{Problem 3 (20\%)}
+Assume $L$ is a lower triangular square matrix stored in the compressed row format. That is, assume arrays \texttt{val}, \texttt{col\_ind}, and \texttt{row\_ptr} are already available. No need to worry about declaring variables and memory allocation. Write the MATLAB code to solve
+\[
+Lx = b
+\]
+We further make the following assumptions and requirements:
+\begin{enumerate}[(1)]
+    \item $L_{ii} \ne 0$, for all $i$.
+    \item In \texttt{col\_ind}, indices of each row are in ascending order.
+    \item Assume simple loops are used (It is like that you are writing Fortran/C/Java code though you use MATLAB syntax here and assume arrays start with index 1. Thus, you cannot use things such as \texttt{x(i:j)}, \texttt{find}, etc.).
+    \item The complexity must be no more than $O(\text{nnz})$.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 4 (30\%)}
+Assume a square matrix $A$ is stored in the compressed column format and we would like to find
+\[
+B = A^T .
+\]
+We store $B$ in compressed column format as well.
+
+\vspace{0.25cm}
+\noindent In the beginning, we try to find the number of non-zero elements in each column of $B$:
+
+\begin{verbatim}
+    for i=1:n+1
+        bcol_ptr(i) = 0;
+    nnz = acol_ptr(n+1)-1;
+    for i=1:nnz
+        bcol_ptr(arow_ind(i)+1) = bcol_ptr(arow_ind(i)+1) +1;
+    bcol_ptr(1) = 1;
+    for i=2:n+1
+        bcol_ptr(i) = bcol_ptr(i) + bcol_ptr(i-1);
+\end{verbatim}
+
+\noindent Explain this segment of code and continue to finish the MATLAB code for obtaining $B$.
+
+\vspace{0.25cm}
+\noindent We further make the following assumptions and requirements:
+\begin{enumerate}[(1)]
+    \item Assume simple loops are used (It is like that you are writing Fortran/C/Java code though you use MATLAB syntax and assume arrays start with index 1. Thus, you cannot use things such as \texttt{x(i:j)}, \texttt{find}, etc.).
+    \item The complexity must be no more than $O(\text{nnz})$.
+    \item You can use only arrays \texttt{aval}, \texttt{arow\_ind}, \texttt{acol\_ptr}, \texttt{bval}, \texttt{bcol\_ind}, \texttt{brow\_ptr}. That is, you cannot allocate other arrays.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 5 (10\%)}
+Given a linear system
+\[
+\begin{bmatrix}
+1 & 2 & 1 \\
+3 & 1 & -2 \\
+1 & 2 & 1
+\end{bmatrix}
+x = 
+\begin{bmatrix}
+-1 \\ 1 \\ 2
+\end{bmatrix}
+\]
+Use $x^{(0)} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$ as the initial point.
+
+\begin{enumerate}[(a)]
+    \item Do three iterations of the Jacobi method.
+    \item Do three iterations of the Gauss-Seidel method.
+\end{enumerate}
+
+\end{CJK*}
+\end{document}

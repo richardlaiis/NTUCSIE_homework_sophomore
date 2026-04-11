@@ -1,0 +1,103 @@
+\documentclass[12pt,a4paper]{article}
+
+% Required packages for math symbols and formatting
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+
+% Required package for Traditional Chinese support via pdflatex
+\usepackage{CJKutf8}
+
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi} % 'bsmi' is the standard Traditional Chinese font family in CJKutf8
+
+\begin{center}
+    \Large \textbf{Assignment}
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Problem 1 (15\%)}
+Give the double binary representation of the number $+17.3$.
+
+\vspace{0.5cm}
+
+\section*{Problem 2 (20\%)}
+Let
+\[ \beta=10, \quad p=4, \quad x=1.000, \quad y=-0.5555 \]
+Consider
+\begin{align*}
+x_0 &= x \\
+x_1 &= (x_0 \ominus y) \oplus y \quad \text{(*註一)} \\
+&\vdots \\
+x_n &= (x_{n-1} \ominus y) \oplus y
+\end{align*}
+Assume exactly rounded operations using the rounding up scheme. What are the values of the sequence $\{x_0, x_1, \dots\}$?
+
+\vspace{0.5cm}
+
+\section*{Problem 3 (25\%)}
+Conduct LU factorization with pivoting for the following matrix
+\[
+A = \begin{bmatrix}
+4 & -10 & -3 & 7 \\
+6 & -5 & -4 & 7 \\
+6 & 27 & 3 & -3 \\
+12 & 6 & -6 & 6
+\end{bmatrix}
+\]
+
+\begin{enumerate}[(a)]
+    \item What are $M_3, P_3, M_2, P_2, M_1, P_1$ such that
+    \[ M_3 P_3 M_2 P_2 M_1 P_1 = U \ ? \]
+    
+    \item What is
+    \[ P_1^{-1} M_1^{-1} P_2^{-1} P_3^{-1} \ ? \]
+    
+    \item What is
+    \[ P_1^{-1} M_1^{-1} P_2^{-1} M_2^{-1} P_3^{-1} M_3^{-1} \ ? \]
+    
+    \item What is
+    \[ P_3 P_2 P_1 P_1^{-1} M_1^{-1} P_2^{-1} P_3^{-1} \ ? \]
+    
+    \item What is the $P$ such that
+    \[ P A = L U \]
+    Is it equal to $P_3 P_2 P_1$?
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Problem 4 (20\%)}
+Consider a binary number in a floating-point system of $\beta=2$ and $p=6$:
+\[ 1.11111 \]
+
+\begin{enumerate}[(1)]
+    \item Transform it to a decimal value with $\beta=10$ and $p=2$. That is,
+    \[ x.x \]
+    Then transform this decimal value to a binary representation with $p=7$. Is the resulting binary the same as (1)?
+    
+    \item Redo (1) but a decimal value with $p=3$.
+\end{enumerate}
+
+\noindent Note that we assume rounding even is used.
+
+\vspace{0.5cm}
+
+\section*{Problem 5 (20\%)}
+In our lecture we derive a version of Cholesky factorization by
+\[ L_{jj} L_{:j} = A_{:j} - \sum_{k=1}^{j-1} L_{jk} L_{:k} \]
+By a similar setting please derive a version that obtains
+\[ A = U^T U \quad \text{(*註二)} \]
+You need to give the program.
+
+\vspace{1cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent \textbf{Footnotes:} \\
+*註一 : $\ominus$ 為內有減號的圈圈, 即 rounded subtraction. \\
+*註二 : $U^T$ ($U'$) 為 transpose of upper triangular matrix $U$.
+
+\end{CJK*}
+\end{document}
