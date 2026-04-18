@@ -230,12 +230,156 @@ Then let's derive $R(t)$, and its first and second derivatives:
 By some easy calculation, we know $\mu=R'(0)=\frac{r}{p}$ and $\sigma^2=R''(0)=\frac{r(1-p)}{p^2}$
 \section*{2.6-11}
 % Your solution here
+Let $Y$ be the number of passengers who do not show up. Since the probability of a passenger not showing up is $0.05$ and we are assuming independence, $Y$ follows a Binomial distribution: $Y \sim \text{Binomial}(n=100, p=0.05)$.
 
+\subsection*{(b)}
+For the airline to fit everyone on the plane, the number of passengers who actually arrive must be 95 or fewer. That means out of the 100 tickets sold, at least 5 people must fail to show up. 
+
+So, we want to find the probability that $Y \ge 5$:
+$$P(Y \ge 5) = 1 - P(Y \le 4)$$
+
+To find $P(Y \le 4)$, we sum the binomial probabilities from $y=0$ to $y=4$ using the formula $P(Y=y) = \binom{n}{y} p^y (1-p)^{n-y}$:
+\begin{itemize}
+    \item $P(Y=0) = \binom{100}{0}(0.05)^0(0.95)^{100} \approx 0.0059$
+    \item $P(Y=1) = \binom{100}{1}(0.05)^1(0.95)^{99} \approx 0.0312$
+    \item $P(Y=2) = \binom{100}{2}(0.05)^2(0.95)^{98} \approx 0.0812$
+    \item $P(Y=3) = \binom{100}{3}(0.05)^3(0.95)^{97} \approx 0.1396$
+    \item $P(Y=4) = \binom{100}{4}(0.05)^4(0.95)^{96} \approx 0.1781$
+\end{itemize}
+
+Summing those probabilities gives us $P(Y \le 4) \approx 0.4360$. 
+Now, substitute that back into our original equation:
+$$P(Y \ge 5) = 1 - 0.4360 = 0.5640$$
+
+\textbf{Answer:} There is approximately a 56.4\% chance the airline can accommodate everyone.
+
+\vspace{1em}
+
+\subsection*{(b)}
+
+If the airline has to turn a passenger away, they must refund the \$300 ticket price plus pay a \$400 penalty. That means the cost per bumped passenger is \$700.
+
+Passengers get bumped if fewer than 5 people fail to show up (i.e., when $Y < 5$). Let's find the expected number of bumped passengers:
+\begin{itemize}
+    \item If $Y=4$ (96 show up), 1 passenger is bumped.
+    \item If $Y=3$ (97 show up), 2 passengers are bumped.
+    \item If $Y=2$ (98 show up), 3 passengers are bumped.
+    \item If $Y=1$ (99 show up), 4 passengers are bumped.
+    \item If $Y=0$ (100 show up), 5 passengers are bumped.
+\end{itemize}
+
+We calculate the expected number of bumped passengers, $E[\text{Bumped}]$, by multiplying each outcome by its probability:
+$$E[\text{Bumped}] = \sum_{y=0}^{4} (5-y) \cdot P(Y=y)$$
+$$E[\text{Bumped}] = 5(0.0059) + 4(0.0312) + 3(0.0812) + 2(0.1396) + 1(0.1781) \approx 0.8551$$
+
+Now, multiply the expected number of bumped passengers by the \$700 cost to find the total expected payout:
+$$\text{Expected Payout} = 700 \times 0.8551 = 598.57$$
+
+\textbf{Answer:} The airline's expected payout is approximately \$598.57.
 \section*{3.1-8}
 % Your solution here
+\subsection*{Part (a): $f(x) = x^3/4,\quad 0 < x < c$}
+
+\noindent\textbf{(i) Find $c$:}
+\[
+\int_0^c \frac{x^3}{4}\,dx = \frac{c^4}{16} = 1 \implies c^4 = 16 \implies c = 2
+\]
+
+\noindent\textbf{(ii) CDF:}
+\[
+F(x) = \int_0^x \frac{t^3}{4}\,dt = \frac{x^4}{16}, \quad 0 < x < 2
+\]
+
+\noindent\textbf{(iv) Mean and Variance:}
+\[
+\mu = \int_0^2 x \cdot \frac{x^3}{4}\,dx = \frac{1}{4}\cdot\frac{x^5}{5}\Bigg|_0^2 = \frac{32}{20} = \frac{8}{5}
+\]
+\[
+E[X^2] = \int_0^2 x^2 \cdot \frac{x^3}{4}\,dx = \frac{1}{4}\cdot\frac{x^6}{6}\Bigg|_0^2 = \frac{64}{24} = \frac{8}{3}
+\]
+\[
+\sigma^2 = E[X^2] - \mu^2 = \frac{8}{3} - \frac{64}{25} = \frac{8}{75}
+\]
+
+\subsection*{Part (b): $f(x) = \frac{3}{16}x^2,\quad -c < x < c$}
+
+\noindent\textbf{(i) Find $c$:}
+\[
+\int_{-c}^{c} \frac{3}{16}x^2\,dx = \frac{3}{16}\cdot\frac{2c^3}{3} = \frac{c^3}{8} = 1 \implies c = 2
+\]
+
+\noindent\textbf{(ii) CDF:}
+\[
+F(x) = \int_{-2}^{x} \frac{3}{16}t^2\,dt = \frac{x^3 + 8}{16}, \quad -2 < x < 2
+\]
+
+\noindent\textbf{(iv) Mean and Variance:}\\
+Since $f(x)$ is symmetric about 0:
+\[
+\mu = 0
+\]
+\[
+\sigma^2 = E[X^2] = \int_{-2}^{2} x^2 \cdot \frac{3}{16}x^2\,dx = \frac{3}{8}\cdot\frac{32}{5} = \frac{12}{5}
+\]
+
+\subsection*{Part (c): $f(x) = c/\sqrt{x},\quad 0 < x < 1$}
+
+\noindent\textbf{(i) Find $c$:}
+\[
+\int_0^1 \frac{c}{\sqrt{x}}\,dx = 2c = 1 \implies c = \frac{1}{2}
+\]
+The pdf is \textbf{unbounded} since $f(x) \to \infty$ as $x \to 0^+$.
+
+\noindent\textbf{(ii) CDF:}
+\[
+F(x) = \int_0^x \frac{1}{2\sqrt{t}}\,dt = \sqrt{x}, \quad 0 < x < 1
+\]
+
+\noindent\textbf{(iv) Mean and Variance:}
+\[
+\mu = \int_0^1 x \cdot \frac{1}{2\sqrt{x}}\,dx = \frac{1}{2}\int_0^1 x^{1/2}\,dx = \frac{1}{3}
+\]
+\[
+E[X^2] = \frac{1}{2}\int_0^1 x^{3/2}\,dx = \frac{1}{5}
+\]
+\[
+\sigma^2 = \frac{1}{5} - \frac{1}{9} = \frac{4}{45}
+\]
+
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+
+\noindent\textbf{(iii)}
+\begin{figure}[H]
+    \centering\includegraphics[width=\linewidth]{hw3_problem4.png}
+    \caption{All the graphs in problem 3.1-8}
+\end{figure}
 
 \section*{3.2-4}
 % Your solution here
+Let $X$ be a continuous-type random variable with cdf $F(x)$, where $F(x)=0$ for $x\le0$ and $0<F(x)<1$ for $0<x$.
+
+We are given the conditional probability:
+$$P(X > x+y \mid X > x) = P(X > y)$$
+
+Using the definition of conditional probability, we have:
+$$\frac{P(X > x+y \cap X > x)}{P(X > x)} = P(X > y)$$
+
+Since $x > 0$ and $y > 0$, the event $(X > x+y)$ is a strict subset of $(X > x)$. Therefore, the intersection $(X > x+y \cap X > x)$ simplifies to $(X > x+y)$. Substituting this back gives:
+$$\frac{P(X > x+y)}{P(X > x)} = P(X > y)$$
+$$P(X > x+y) = P(X > x)P(X > y)$$
+
+Following the hint, let $g(x) = 1 - F(x) = P(X > x)$. Substituting $g$ into the equation yields:
+$$g(x+y) = g(x)g(y)$$
+
+This is Cauchy's functional equation. Its only continuous, non-trivial solution is of the form $g(x) = e^{kx}$. 
+
+Because $0 < F(x) < 1$ for $x > 0$, it follows that $0 < g(x) < 1$ for $x > 0$. For $e^{kx}$ to be strictly between 0 and 1 for positive $x$, the constant $k$ must be negative. Let $k = -\lambda$ for some constant $\lambda > 0$. Thus:
+$$g(x) = e^{-\lambda x}$$
+
+Finally, substitute $g(x)$ back into the expression for $F(x)$:
+$$F(x) = 1 - g(x) = 1 - e^{-\lambda x}, \quad 0 < x$$
+
+This completes the proof.
 
 \end{document}
 % how to display codes?
