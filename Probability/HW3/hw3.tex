@@ -1,0 +1,251 @@
+% \documentclass[12pt, a4paper]{article}
+
+% % --- Essential Packages ---
+% \usepackage{xeCJK} % Support for Chinese, Japanese, and Korean
+% \usepackage{geometry} % For page margins
+% \usepackage{hyperref} % For clickable links and PDF bookmarks
+
+% % --- Font Settings ---
+% % Replace "PingFang TC" or "Microsoft JhengHei" with a font installed on your system
+% \setCJKmainfont{Noto Sans CJK TC}
+% %\setCJKmainfont{PingFang TC} % Common for Mac users
+
+% \geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% % --- Metadata ---
+% \title{Probability HW3}
+% \author{B13902022 賴昱錡}
+% \date{\today}
+
+% \begin{document}
+
+% \maketitle
+
+% \section*{2.5-5}
+% % Your solution here
+% Recall that:
+% \begin{itemize}
+%     \item $M(0)=E[e^{0X}]=E[1]=1$
+%     \item $M'(0)=\mu=E[X]$
+%     \item $M''(0)=E[X^2]$
+% \end{itemize}
+% Thus, we obtain:
+% \begin{align*}
+    
+% \end{align*}
+
+% \section*{2.5-6}
+% % Your solution here
+
+% \section*{2.6-11}
+% % Your solution here
+
+% \section*{3.1-8}
+% % Your solution here
+
+% \section*{3.2-4}
+% % Your solution here
+
+% \end{document}
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[margin=2cm, a4paper]{geometry}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{fancyvrb}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\newcommand{\mytitle}{Probability - Homework 3}
+\newcommand{\myauthor}{B13902022 Yu-Chi,Lai}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\mytitle}
+\fancyhead[R]{\myauthor}
+
+\usepackage[english]{babel}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{\mytitle}
+\author{\textbf{\myauthor}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{2.5-5}
+% Your solution here
+Recall that:
+\begin{itemize}
+    \item $M(0)=E[e^{0X}]=E[1]=1$
+    \item $M'(0)=\mu=E[X]$
+    \item $M''(0)=E[X^2]$
+\end{itemize}
+Thus, we obtain:
+\begin{align*}
+    R'(0)=\frac{M'(0)}{M(0)}=\frac{\mu}{1}=\mu \\
+    R''(0)=\frac{M(0)M''(0)-[M'(0)]^2}{[M(0)]^2}=\frac{1\cdot E[X^2]-(E[X])^2}{1}=E[X^2]-(E[X])^2=\sigma^2
+\end{align*}
+completes the proof
+
+\section*{2.5-6}
+% Your solution here
+\subsection*{(a)}
+Suppose the probability of success be $p$, $X$ be the r.v. standing for the number of success.
+$$M(t)=P(X=0)\cdot e^{0t}+P(X=1)\cdot e^{1t}=(1-p)+p\cdot e^t$$
+
+Then we have:
+\begin{align*}
+    R(t)=\ln{(1-p+pe^t)} \\
+    R'(t)=\frac{pe^t}{1-p+pe^t} \\
+    R''(t)=\frac{(1-p+pe^t)pe^t-(pe^t)^2}{(1-p+pe^t)^2}
+\end{align*}
+
+By the results in 2.5-5, $\mu=R'(0)=p$, $\sigma^2=R''(0)=p(1-p)$
+\subsection*{(b)}
+Suppose the probability of success be $p$, $X$ be the r.v. standing for the number of success, and $n$ be the count of the trials.
+\begin{align*}
+    M(t)&=\sum^n_{k=0}\binom{n}{k}p^k(1-p)^{n-k}e^{kt} \\
+    &=\sum^n_{k=0}\binom{n}{k}(pe^t)^k(1-p)^{n-k} \\
+    &=(1-p+pe^t)^n
+\end{align*}
+The last equation comes from binomial theorem. And the first and second derivatives are:
+\begin{align*}
+    M'(t)=n(1-p+pe^t)^{n-1}pe^t \\
+    M''(t)=n(n-1)(1-p+pe^t)^{n-2}(pe^t)^2+n(1-p+pe^t)^{n-1}pe^t
+\end{align*}
+Hence, since $R(t)=\ln M(t)=n\ln(1-p+pe^t)$,
+\begin{align*}
+    R'(t)&=\frac{npe^t}{1-p+pe^t} \\
+    R''(t)&=\frac{npe^t(1-p)}{(1-p+pe^t)^2}
+\end{align*}
+By the results in 2.5-5, $\mu=R'(0)=np$ and $\sigma^2=R''(0)=np(1-p)$.
+\subsection*{(c)}
+Suppose the probability of success be $p$, $X$ be the r.v. standing for the number of trials to observe one success.
+
+\begin{align*}
+    M(t)&=\sum_{k=1}^{\infty}e^{kt}(1-p)^{k-1}p \\
+    &=pe^t\sum_{k=1}^{\infty}(e^t(1-p))^{k-1} \\
+    &=\frac{pe^t}{1-e^t(1-p)}
+\end{align*}
+
+With the bound for $t$:
+$$e^t<\frac{1}{1-p}\Rightarrow t<-\ln{(1-p)}$$
+
+Hence, we have:
+\begin{align*}
+    R(t)&=\ln{(\frac{pe^t}{1-e^t(1-p)})} \\
+    R'(t)&=\frac{1-e^t(1-p)}{pe^t}\cdot \frac{pe^t(1-e^t(1-p))+p(1-p)e^{2t}}{[1-e^t(1-p)]^2} \\
+    &=\frac{(1-e^t(1-p))+(1-p)e^t}{1-e^t(1-p)} \\
+    &=1+\frac{(1-p)e^t}{1-e^t(1-p)} \\
+    R''(t)&=\frac{(1-p)e^t[1-e^t(1-p)]+[(1-p)e^t]^2}{[(1-e^t(1-p))]^2}
+\end{align*}
+By some calculation, we found $\mu=R'(0)=\frac{1}{p}$ and $\sigma^2=\frac{(1-p)p+(1-p)^2}{p^2}=\frac{1-p}{p^2}$
+\subsection*{(d)}
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+\begin{theorem}
+The expected values of two random variables is multiplicative if \textbf{they are indenpendent}, i.e., $E[XY]=E[X][Y]$
+\end{theorem}
+\begin{proof}
+If $X$ and $Y$ are independent (and $\mathcal{X}$ and $\mathcal{Y}$ are the sample spaces for $X$ and $Y$ respectively.), it holds that
+
+\begin{equation}
+p(x, y) = p(x)p(y) \quad \text{for all} \quad x \in \mathcal{X}, y \in \mathcal{Y} .
+\end{equation}
+
+Applying this to the expected value for discrete random variables, we have
+
+\begin{align*}
+\text{E}(XY) &= \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} (x \cdot y) \cdot f_{X,Y}(x, y) \\ 
+&= \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} (x \cdot y) \cdot (f_X(x) \cdot f_Y(y)) \\ 
+&= \sum_{x \in \mathcal{X}} x \cdot f_X(x) \sum_{y \in \mathcal{Y}} y \cdot f_Y(y) \\ 
+&= \sum_{x \in \mathcal{X}} x \cdot f_X(x) \cdot \text{E}(Y) \\ 
+&= \text{E}(X)\text{E}(Y) . 
+\end{align*}
+
+And applying it to the expected value for continuous random variables, we have
+
+\begin{align*} 
+\text{E}(XY) &= \int_{\mathcal{X}} \int_{\mathcal{Y}} (x \cdot y) \cdot f_{X,Y}(x, y) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} \int_{\mathcal{Y}} (x \cdot y) \cdot (f_X(x) \cdot f_Y(y)) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} x \cdot f_X(x) \int_{\mathcal{Y}} y \cdot f_Y(y) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} x \cdot f_X(x) \cdot \text{E}(Y) \,dx \\ 
+&= \text{E}(X)\text{E}(Y) . 
+\end{align*}
+\end{proof}
+
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+
+Let $Y$ be the r.v. for the number of trials to achiving exactly $r$ successes.
+
+We can express $Y$ as the sum of $r$ independent, identically distributed geometric random variables, $p$ is the probability of getting success in a single test:
+$$Y=X_1+X_2+\dots+X_r$$
+In this equation, $X_1$ is the number of trials to get the first success, $X_2$ is the number of additional trials to get the second success, and so on up to the $r$-th success.
+
+As derived previously, the m.g.f for a single geometric r.v. is:
+$$M_X(t)=\frac{pe^t}{1-e^t(1-p)}$$
+
+By Theorem 0.1, we can obtain the m.g.f for $Y$ using following steps:
+\begin{align*}
+M_Y(t)&=E[e^{Yt}] \\
+&=E[e^{(X_1+X_2+\dots+X_r)}] \\
+&=E[e^{X_1t}\cdot e^{X_2t}\cdot\dots\cdot e^{X_rt}] \\
+&=E[e^{X_1t}]E[e^{X_2t}]\dots E[e^{X_rt}] \\
+&=(\frac{pe^t}{1-e^t(1-p)})^r
+\end{align*}
+Then let's derive $R(t)$, and its first and second derivatives:
+\begin{align*}
+    R(t)&=\ln{(M_Y(t))} \\
+    &=r(\ln{(p)}+t-\ln{(1-e^t(1-p))}) \\
+    R'(t)&=r(1+\frac{(1-p)e^t}{1-e^t(1-p)}) \\
+    R''(t)&=r\frac{(1-p)e^t[1-e^t(1-p)]+[e^t(1-p)]^2}{[1-e^t(1-p)]^2} \\
+    &=r\frac{(1-p)e^t}{[1-e^t(1-p)]^2}
+\end{align*}
+By some easy calculation, we know $\mu=R'(0)=\frac{r}{p}$ and $\sigma^2=R''(0)=\frac{r(1-p)}{p^2}$
+\section*{2.6-11}
+% Your solution here
+
+\section*{3.1-8}
+% Your solution here
+
+\section*{3.2-4}
+% Your solution here
+
+\end{document}
+% how to display codes?
+% \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{python}
+% \end{minted}
+
+% how to display images?
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{}
+%     \caption{Caption}
+% \end{figure}
+% test
