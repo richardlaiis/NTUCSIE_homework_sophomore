@@ -1,0 +1,151 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.9cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{titlesec}
+
+
+\newcommand{\mytitle}{DSDL Midterm Cheat Sheet}
+\newcommand{\myauthor}{B13902022 Yu-Chi Lai}
+
+\pagestyle{empty}
+
+\title{\mytitle}
+\author{\textbf{\myauthor}}
+\date{}
+
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{0.45cm}
+\setlist[itemize]{nosep,leftmargin=*}
+\setlist[enumerate]{nosep,leftmargin=*}
+\titlespacing*{\section}{0pt}{0.45em}{0.2em}
+\titlespacing*{\subsection}{0pt}{0.35em}{0.15em}
+
+\begin{document}
+
+{\small
+\begin{center}
+{\Large\textbf{\mytitle}}\\[-0.2em]
+\myauthor
+\end{center}
+
+\begin{multicols}{2}
+
+\section*{Number Representation}
+Let $n$ be word length (bits).
+\begin{itemize}
+    \item \textbf{Sign-magnitude (SM):} 1 sign bit + $(n-1)$ magnitude bits.
+    \item \textbf{1's comp.} $\overline{N}=(2^n-1)-N$ (flip all bits).
+    \item \textbf{2's comp.} $N^*=2^n-N=\overline{N}+1$.
+    \item \textbf{Sign extension:} copy sign bit when increasing word length.
+\end{itemize}
+For $n=4$: SM/1's comp range $[-7,+7]$ with $\pm0$; 2's comp range $[-8,+7]$.
+
+\section*{Complement Addition}
+\textbf{2's comp:}
+\begin{itemize}
+    \item Add as unsigned, discard carry out of MSB.
+    \item Overflow iff same-sign inputs give opposite-sign output.
+    \item Equivalent test: $V=C_{in\to MSB}\oplus C_{out\;MSB}$.
+\end{itemize}
+Reason: terms contain an extra $2^n$ that is dropped modulo $2^n$.
+
+\textbf{1's comp:}
+\begin{itemize}
+    \item Add as unsigned, then add end-around carry to LSB.
+    \item Same overflow rule as above.
+    \item Has two zeros: $+0=00\cdots0$, $-0=11\cdots1$.
+\end{itemize}
+
+\section*{Boolean Algebra}
+\textbf{Uniting:} $XY+XY'=X$, $(X+Y)(X+Y')=X$\\
+\textbf{Absorption:} $X+XY=X$, $X(X+Y)=X$\\
+\textbf{Elimination:} $X+X'Y=X+Y$, $X(X'+Y)=XY$\\
+\textbf{Consensus:} $XY+X'Z+YZ=XY+X'Z$\\
+$(X+Y)(X'+Z)(Y+Z)=(X+Y)(X'+Z)$\\
+\textbf{Distributive:} $X(Y+Z)=XY+XZ$,
+$(X+Y)(X+Z)=X+YZ$\\
+\textbf{De Morgan:} $(XY)'=X'+Y'$, $(X+Y)'=X'Y'$\\
+\textbf{Useful:} $(X+Y)(X'+Z)=XZ+X'Y$\\
+\textbf{Duality:} swap $0\leftrightarrow1$, AND$\leftrightarrow$OR; keep variables/complements.
+
+\section*{Canonical Forms \& Conversion}
+For $n$ variables, define universe $U=\{0,\dots,2^n-1\}$.
+
+If $F=\sum m(S)$, then
+\[ F=\prod M(U\setminus S),\quad F'=\sum m(U\setminus S)=\prod M(S). \]
+
+Let $A,B\subseteq U$:
+\begin{itemize}
+    \item $\sum m(A)\cdot\sum m(B)=\sum m(A\cap B)$
+    \item $\prod M(A)\cdot\prod M(B)=\prod M(A\cup B)$
+    \item $\sum m(A)+\sum m(B)=\sum m(A\cup B)$
+    \item $\prod M(A)+\prod M(B)=\prod M(A\cap B)$
+\end{itemize}
+
+Example: $F_1=\sum m(0,2,3,5,9,11)$,
+$F_2=\sum m(0,3,9,11,13,14)$
+\[F_1F_2=\sum m(0,3,9,11).\]
+
+Convert expression to canonical form:
+\begin{itemize}
+    \item Use truth table directly.
+    \item SOP $\to$ minterms: insert missing vars with $(X+X')=1$ and expand.
+    \item POS $\to$ maxterms: insert missing vars with $XX'=0$ and factor.
+\end{itemize}
+
+\section*{QM Method}
+\begin{enumerate}
+    \item List all minterms.
+    \item Include don't-care terms for grouping only.
+    \item Combine adjacent terms; mark covered terms.
+    \item Repeat until no further combining.
+    \item Build prime implicant (PI) chart.
+    \item Keep essentials first.
+    \item Cover remaining minterms with minimum PIs.
+\end{enumerate}
+
+\section*{K-map Simplification (Recap)}
+Minimum SOP = minimum cover = smallest PI set that covers all 1-cells
+(first minimize PI count, then literal count).
+\begin{enumerate}
+    \item Mark 1's (and optional don't-cares).
+    \item Form largest possible power-of-2 groups (wrap-around allowed) to find PIs.
+    \item Pick all essential PIs.
+    \item Cover uncovered 1's with as few extra groups as possible (minimum cover).
+\end{enumerate}
+
+\section*{Multilevel Gate Circuits}
+\textbf{SOP form chain:}
+\begin{itemize}
+    \item AND-OR $\leftrightarrow$ NAND-NAND
+    \item NAND-NAND $\leftrightarrow$ OR-NAND
+    \item OR-NAND $\leftrightarrow$ NOR-OR
+    \item NOR-OR $\leftrightarrow$ AND-OR
+\end{itemize}
+
+\textbf{POS form chain:}
+OR-AND $\leftrightarrow$ NOR-NOR $\leftrightarrow$ AND-NOR $\leftrightarrow$ NAND-AND $\leftrightarrow$ OR-AND.
+
+\textbf{Cost bounds:}
+\begin{itemize}
+    \item gates $\le$ terms $+1$,
+    \item gate inputs $\le$ literals $+$ terms.
+    \item Equality can fail when a term degenerates to one variable.
+\end{itemize}
+
+\section*{Hazards}
+\begin{itemize}
+    \item \textbf{Static-1:} same check as 2-level logic.
+    \item \textbf{Static-0:} pattern $XX'\alpha$ in SOP, adjacent 0-cells differ in $X$ with $\alpha=1$.
+    \item \textbf{Dynamic:} for adjacent input states with opposite outputs, change in $X$ reaches $\ge 3$ paths.
+    \item Practical fix: add redundant consensus term to cover adjacent cells.
+\end{itemize}
+Hazard-free AND-OR: use SOP where every adjacent 1-pair is covered by at least one implicant. OR-AND uses the dual rule.
+
+\end{multicols}
+}
+
+\end{document}

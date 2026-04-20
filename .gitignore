@@ -6,3 +6,6 @@
 *.synctex.gz
 .venv/
 numerical_methods/hw3/matrix
+numerical_methods/hw3/code/A
+numerical_methods/hw3/code/b
+numerical_methods/hw3/code/x
