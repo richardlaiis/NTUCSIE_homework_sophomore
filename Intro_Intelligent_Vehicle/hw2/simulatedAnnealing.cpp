@@ -42,7 +42,7 @@ double wcrt(int i, int n, double tau, Msg m[]) { // worst case response time
         }
         temp += Bi;
 
-        if (temp > m[i].T) {
+        if (temp+Ci > m[i].T) {
             return -1.0; // not schedulable
         }
 
