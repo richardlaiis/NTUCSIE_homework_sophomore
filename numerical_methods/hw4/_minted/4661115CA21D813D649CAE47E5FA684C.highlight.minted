@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{source}\PYG{+w}{ }/opt/intel/oneapi/setvars.sh
+gcc\PYG{+w}{ }\PYGZhy{}fopenmp\PYG{+w}{ }\PYGZhy{}m64\PYG{+w}{ }\PYGZhy{}I\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nv}{MKLROOT}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{/include\PYGZdq{}}\PYG{+w}{ }new\PYGZus{}spmm.c\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{    }\PYGZhy{}L\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nv}{MKLROOT}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{/lib/intel64\PYGZdq{}}\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{    }\PYGZhy{}lmkl\PYGZus{}intel\PYGZus{}lp64\PYG{+w}{ }\PYGZhy{}lmkl\PYGZus{}gnu\PYGZus{}thread\PYG{+w}{ }\PYGZhy{}lmkl\PYGZus{}core\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{    }\PYGZhy{}lpthread\PYG{+w}{ }\PYGZhy{}lm\PYG{+w}{ }\PYGZhy{}ldl\PYG{+w}{ }\PYGZhy{}o\PYG{+w}{ }new\PYGZus{}spmm
+\end{MintedVerbatim}

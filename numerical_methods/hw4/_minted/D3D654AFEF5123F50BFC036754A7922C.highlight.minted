@@ -1,0 +1,3 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+./new\PYGZus{}spmm\PYG{+w}{ }\PYGZlt{}m\PYGZus{}rows\PYGZus{}A\PYGZgt{}\PYG{+w}{ }\PYGZlt{}k\PYGZus{}cols\PYGZus{}A\PYGZus{}rows\PYGZus{}B\PYGZgt{}\PYG{+w}{ }\PYGZlt{}n\PYGZus{}cols\PYGZus{}B\PYGZgt{}
+\end{MintedVerbatim}

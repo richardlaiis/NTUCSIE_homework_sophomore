@@ -1,53 +1,126 @@
-\documentclass[12pt]{article}
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs} 
 \usepackage{graphicx}
-\usepackage[margin=2cm, a4paper]{geometry}
-\usepackage{setspace}
-\usepackage{pdfpages}
-\usepackage{float}
-\usepackage{amsmath}
-\usepackage{fancyvrb}
-\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
 \usepackage{minted}
-\usepackage{enumitem}
-\usepackage[colorlinks,linkcolor=blue]{hyperref}
 
-
-\renewcommand{\contentsname}{Contents}
-\renewcommand{\figurename}{Figure}
-\renewcommand{\tablename}{Table}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=magenta,      
-    urlcolor=blue,
+% Configure the style of the minted code block
+\setminted[c]{
+    style=vs,          
+    linenos=true,      
+    breaklines=true,   
+    % fontsize=\scriptsize, 
+    frame=lines,       
+    framesep=2mm
 }
-\newcommand{\mytitle}{Numerical Methods HW4}
-\newcommand{\myauthor}{B13902022 Richard Lai}
 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhead{}
-\fancyhead[L]{\mytitle}
-\fancyhead[R]{\myauthor}
+% Code snippet configuration for bash commands
+\setminted[bash]{
+    fontsize=\footnotesize,
+    breaklines=true
+}
 
+\newcommand{\mytitle}{Numerical Methods: Homework 4}
+\newcommand{\myauthor}{B13902022 Yu-Chi, Lai}
 
-\title{\mytitle}
+\title{\textbf{\mytitle}}
 \author{\myauthor}
 \date{\today}
 
 \begin{document}
+
 \maketitle
 
+\section{Introduction}
+This report details the implementation and optimization of Sparse-Dense Matrix Multiplication ($C=AB$). The sparse matrix $A$ was implemented utilizing both Compressed Sparse Row (CSR) and Compressed Sparse Column (CSC) formats. The dense matrices $B$ and $C$ were stored in a 1D row-major layout. The custom algorithms (sequential and OpenMP parallelized) were benchmarked against the Intel oneMKL library across a strict set of matrix shapes. For all tests, the total number of non-zero elements (NNZ) in $A$ was strictly maintained at $32 \times m$.
+
+\section{Experimental Setup}
+\textbf{The full source code is in the appendix (the last few pages)}.
+
+The benchmarks were compiled and executed locally with the following system configuration:
+\begin{itemize}
+    \item \textbf{OS:} Arch Linux x86\_64 (Kernel: Linux 6.19.14)
+    \item \textbf{CPU:} Intel Core Ultra 5 125H (18 Cores) @ 4.50 GHz
+    \item \textbf{RAM:} 16 GiB
+    \item \textbf{Compiler:} GCC with OpenMP (\texttt{-fopenmp})
+    \item \textbf{Library:} Intel oneMKL (GNU Threading Layer, \texttt{lp64})
+\end{itemize}
+
+The source code was compiled using the following command to link the threading and math libraries properly:
+\begin{minted}{bash}
+source /opt/intel/oneapi/setvars.sh
+gcc -fopenmp -m64 -I"${MKLROOT}/include" new_spmm.c \
+    -L"${MKLROOT}/lib/intel64" \
+    -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core \
+    -lpthread -lm -ldl -o new_spmm
+\end{minted}
+
+The testing is done by the following command (with different arguments):
+\begin{minted}{bash}
+./new_spmm <m_rows_A> <k_cols_A_rows_B> <n_cols_B>
+\end{minted}
+where $m$ is the number of rows of $A$, $k$ is the number of cols $A$ (number of rows of $B$), $k$ is the number of rows of $B$.
+
+\section{Complexity Analysis \& OpenMP Strategy}
+
+\subsection{Algorithmic Complexity}
+Standard dense matrix multiplication operates with a time complexity of $O(m \cdot k \cdot n)$. By exploiting the sparsity of $A$, we eliminate all operations involving zero values. For each non-zero element in $A$, exactly $n$ multiplications and additions are performed (iterating across the columns of $B$). Given the strict assignment constraint of $NNZ = 32m$, the time complexity becomes $O(32 \cdot m \cdot n)$, which simplifies to a linear bound of $O(m \cdot n)$ with respect to the dense matrix dimensions.
+
+\subsection{Parallelization Strategy}
+\textbf{Selected Format: Compressed Sparse Row (CSR)} \\
+The CSR format was chosen for OpenMP parallelization (\texttt{\#pragma omp parallel for}) to avoid race conditions and expensive atomic locks. In the CSR implementation, the outer loop iterates over the rows of $A$. Since each row of $A$ independently computes a distinct row of $C$, we can safely distribute the workload across multiple hardware threads without write conflicts. 
+
+Attempting to parallelize the CSC format over its outer loop distributes the columns of $A$. Multiple threads processing different columns would inevitably attempt to accumulate their partial products into the exact same memory locations in $C$ simultaneously, requiring atomic operations that severely degrade parallel performance.
+
+\section{Benchmark Results}
+The algorithms were benchmarked on $A$ configurations of $(n, n)$, $(4n, n)$, and $(n, 4n)$, with $B$ column sizes of $64$ and $512$. The results in Table \ref{tab:benchmark} are measured in seconds.
+
+\begin{table}[h]
+\centering
+\caption{SpMM Execution Time (Seconds) across Benchmark Shapes}
+\label{tab:benchmark}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll|ccc|cc@{}}
+\toprule
+\multicolumn{2}{c|}{\textbf{Matrix Configurations}} & \multicolumn{3}{c|}{\textbf{CSR Format}} & \multicolumn{2}{c}{\textbf{CSC Format}} \\ 
+\textbf{Shape of $A (m \times k)$} & \textbf{Cols of $B (n)$} & \textbf{Custom (Seq)} & \textbf{Custom (OMP)} & \textbf{oneMKL} & \textbf{Custom (Seq)} & \textbf{oneMKL} \\ \midrule
+$(2048 \times 2048)$       & $64$  & 0.0479 & 0.0098 & 0.0002 & 0.0599 & 0.0359 \\
+$(2048 \times 2048)$       & $512$ & 0.3864 & 0.0663 & 0.0056 & 0.3817 & 0.0773 \\
+$(32768 \times 32768)$     & $64$  & 0.8037 & 0.1351 & 0.0158 & 0.7820 & 0.6496 \\
+$(32768 \times 32768)$     & $512$ & 5.8841 & 0.8434 & 0.0319 & 4.4721 & 3.6203 \\ \midrule
+$(8192 \times 2048)$       & $64$  & 0.1903 & 0.0313 & 0.0008 & 0.1868 & 0.1745 \\
+$(8192 \times 2048)$       & $512$ & 1.5271 & 0.2051 & 0.0245 & 1.4916 & 0.8153 \\
+$(131072 \times 32768)$    & $64$  & 3.1581 & 0.4691 & 0.0651 & 3.1940 & 1.7683 \\
+$(131072 \times 32768)$    & $512$ & 18.130 & 3.1545 & 0.1437 & 23.442 & 17.188 \\ \midrule
+$(2048 \times 8192)$       & $64$  & 0.0473 & 0.0101 & 0.0004 & 0.0499 & 0.0318 \\
+$(2048 \times 8192)$       & $512$ & 0.3856 & 0.0655 & 0.0040 & 0.3761 & 0.0562 \\
+$(32768 \times 131072)$    & $64$  & 0.7873 & 0.1579 & 0.0093 & 0.7501 & 0.7872 \\
+$(32768 \times 131072)$    & $512$ & 5.3717 & 0.8001 & 0.0958 & 5.8568 & 1.0142 \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\section{Performance Comparison and Discussion}
+
+The benchmark data yields several distinct architectural observations regarding memory layouts, multithreading, and library-level optimizations.
+
+\paragraph{1. OpenMP Multithreading Scaling:} 
+The custom OpenMP CSR implementation demonstrated excellent scaling across all workloads. On the heaviest workload ($131072 \times 32768$, $n=512$), OpenMP completed the execution in $3.15$ seconds compared to the sequential $18.13$ seconds. This translates to an approximate $5.7 \times$ speedup, confirming that distributing row-wise matrix multiplications effectively utilizes the Intel Core Ultra 5's multicore architecture.
+
+\paragraph{2. Intel oneMKL Hardware Dominance (CSR):} 
+As expected, Intel oneMKL's CSR implementation vastly outperformed the custom implementations. On the $32768 \times 32768$ ($n=512$) benchmark, oneMKL completed in just $0.0319s$ compared to the custom OpenMP's $0.8434s$. This delta highlights oneMKL's reliance on highly optimized Inspector-Executor paradigms, cache blocking, and AVX SIMD vectorization, which maximize memory bandwidth and compute cycles far beyond standard C-loops.
+
+\paragraph{3. The oneMKL CSC Anomaly:} 
+The data exposes a massive inefficiency within oneMKL when dealing with CSC matrices multiplying against row-major dense matrices. For instance, in the $(131072 \times 32768, n=512)$ case, oneMKL CSR took a mere $0.143s$, whereas oneMKL CSC took a staggering $17.188s$—making it over $100\times$ slower than its CSR counterpart, and significantly slower than our custom OpenMP CSR routine ($3.15s$). This suggests that \texttt{mkl\_sparse\_s\_mm} is highly unoptimized for this specific format-layout pairing, likely forcing the library to perform an expensive internal matrix transposition prior to the multiplication step.
+
+\newpage
+\appendix
+\section{Source Code (\texttt{new\_spmm.c})}
+\inputminted{c}{new_spmm.c}
 
 \end{document}
-% how to display codes?
-% \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,linenos,breaklines]{python}
-% \end{minted}
-
-% how to display images?
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.5\linewidth]{}
-%     \caption{Caption}
-% \end{figure}
-% test
