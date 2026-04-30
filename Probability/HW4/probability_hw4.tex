@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage{minted}
 \usepackage{enumitem}
+\usepackage{amsthm}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
 
 
@@ -35,7 +36,6 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 
-\usepackage{amsthm}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \theoremstyle{remark}
@@ -48,7 +48,7 @@
 \begin{document}
 \maketitle
 
-\section{3.2-17}
+\section*{3.2-17}
 The pdf of chi-square distribution is:
 $$f(x)=\frac{1}{\varGamma(r/2)2^{r/2}}x^{r/2-1}e^{-x/2}$$
 
@@ -70,7 +70,7 @@ Let $Y$ be the number of observations (out of 15) that exceeds $7.779$, since th
 
 
 \newpage{}
-\section{3.2-18}
+\section*{3.2-18}
 Let the r.v. $Y=X-80$, so $Y>0$ with pdf:
 $$f(y)=\frac{y}{50^2}e^{-y/50},\ y>0$$
 
@@ -102,7 +102,7 @@ This is equivalent to finding $P(Y<120)=1-P(Y\ge 120)$:
 
 
 \newpage{}
-\section{3.3-11}
+\section*{3.3-11}
 We are given that $\mu=21.37,\sigma^2=0.16,\sigma=0.4$.
 \subsection*{(a)}
 Standardize using  $Z=\frac{X-\mu}{\sigma}$.
@@ -124,17 +124,144 @@ where the value of $\Phi(1.75)$ is obtained by looking up the table.
 Since each selection is independent, it can be seen as a binomial distribution with $p=0.1$ and $n=15$. ($Y$ is the r.v.)
 \begin{align*}
     P(Y\le 2)&=P(Y=0)+P(Y=1)+P(Y=2) \\
-    &= \binom{15}{0}(0.9)^{10}+\binom{15}{1}(0.1)(0.9)^9+\binom{15}{2}(0.1)^2(0.9)^8 \\
+    &= \binom{15}{0}(0.9)^{15}+\binom{15}{1}(0.1)(0.9)^{14}+\binom{15}{2}(0.1)^2(0.9)^{13} \\
     &=0.8159
 \end{align*}
 \fbox{So we have that $P(Y\le 2)=0.8159$.}
 
 \newpage{}
-\section{4.1-9}
+\section*{4.1-9}
+\subsection*{(a)}
+For 15 independent items, $(X,Y,15-X-Y)$ follows a multinomial distribution. So the joint pmf is:
+\begin{align*}
+    f(x,y)=P(X=x,Y=y)=\frac{15!}{x!y!(15-x-y)!}(\frac{6}{10})^x(\frac{3}{10})^y(\frac{1}{10})^{15-x-y}
+\end{align*}
+And it's valid when $x\ge 0,y\ge 0,x+y\le 15$.
+\subsection*{(b)}
+By the constraints I previously mentioned, we can draw the following graph. (The colored region is the set of integers $(x,y)$ for which $f(x,y)>0$)
+\begin{figure}[H]
+    \centering\includegraphics[width=0.6\linewidth]{multinomial_support_region.jpg}
+\end{figure}
+Independence would require a rectangular support, so $X$ and $y$ are NOT independent.
+
+This is trivial because if $X$ and $Y$ are independent, we have:
+$$f(x,y)=f_X(x)f_Y(y)$$
+So $f_X(x)>0,f_Y(y)>0$ implies $f(x,y)>0$, this forces the set of points to be the Cartesian product of $X$ and $Y$, the region must be rectangular. (However, in this problem, $(x,y)=(15,15)$, $f(x,y)\ne f_X(x)f_Y(y)$ obviously)
+\subsection*{(c)}
+\begin{align*}
+    P(X=10,Y=4)&=f(10,4) \\
+    &=\frac{15!}{10!4!1!}\cdot(0.6)^{10}\cdot(0.3)^4\cdot(0.1)^1 \\
+    &=0.0735
+\end{align*}
+\subsection*{(d)}
+We should sum over all possible $y$, but we each item is "good" with probability $6/10$, regardless of other categories. So we can view it as the binomial distribution of $n=15$ and $p=\frac{6}{10}$ (where $p$ is the probability of having "good" item)
+
+Thus, the marginal pmf of $X$ is:
+$$f_X(x)=P(X=x)=\binom{15}{x}(0.6)^x(0.4)^{15-x}$$
+\subsection*{(e)}
+\begin{align*}
+    P(X\le 11)&=1-P(X>11) \\
+    &=1-(P(X=12)+P(X=13)+P(X=14)+P(X=15)) \\
+    &=1-(\binom{15}{12}(0.6)^{12}(0.4)^3+\binom{15}{13}(0.6)^{13}(0.4)^2+\binom{15}{14}(0.6)^{14}(0.4)^1+\binom{15}{15}(0.6)^{15}) \\
+    &=0.9095
+\end{align*}
 
 \newpage{}
-\section{4.2-3}
+\section*{4.2-3}
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+\begin{theorem}
+The expected values of two random variables is multiplicative if \textbf{they are indenpendent}, i.e., $E[XY]=E[X][Y]$
+\end{theorem}
+\begin{proof}
+If $X$ and $Y$ are independent (and $\mathcal{X}$ and $\mathcal{Y}$ are the sample spaces for $X$ and $Y$ respectively.), it holds that
 
+\begin{equation}
+p(x, y) = p(x)p(y) \quad \text{for all} \quad x \in \mathcal{X}, y \in \mathcal{Y} .
+\end{equation}
+
+Applying this to the expected value for discrete random variables, we have
+
+\begin{align*}
+\text{E}(XY) &= \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} (x \cdot y) \cdot f_{X,Y}(x, y) \\ 
+&= \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} (x \cdot y) \cdot (f_X(x) \cdot f_Y(y)) \\ 
+&= \sum_{x \in \mathcal{X}} x \cdot f_X(x) \sum_{y \in \mathcal{Y}} y \cdot f_Y(y) \\ 
+&= \sum_{x \in \mathcal{X}} x \cdot f_X(x) \cdot \text{E}(Y) \\ 
+&= \text{E}(X)\text{E}(Y) . 
+\end{align*}
+
+And applying it to the expected value for continuous random variables, we have
+
+\begin{align*} 
+\text{E}(XY) &= \int_{\mathcal{X}} \int_{\mathcal{Y}} (x \cdot y) \cdot f_{X,Y}(x, y) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} \int_{\mathcal{Y}} (x \cdot y) \cdot (f_X(x) \cdot f_Y(y)) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} x \cdot f_X(x) \int_{\mathcal{Y}} y \cdot f_Y(y) \,dy \,dx \\ 
+&= \int_{\mathcal{X}} x \cdot f_X(x) \cdot \text{E}(Y) \,dx \\ 
+&= \text{E}(X)\text{E}(Y) . 
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+    Suppose $X$ and $Y$ are two random variables, then:
+    $$\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)+2\mathrm{Cov}(X,Y)$$
+\end{theorem}
+\begin{proof}
+We can follow the definition of variance and covariance, and writes:
+\begin{align*}
+    \mathrm{Var}(X+Y)&=E[(X+Y-\mu_{X+Y})^2] \\
+    &=E[[(X-\mu_X)+(Y-\mu_Y)]^2] \\
+    &=E[(X-\mu_X)^2]+E[(Y-\mu_Y)^2]+2E[(X-\mu_X)(Y-\mu_Y)] \\
+    &=\mathrm{Var}(X)+\mathrm{Var}(Y)+2\mathrm{Cov}(X,Y)
+\end{align*}
+The proof is completed here.
+\end{proof}
+\begin{theorem}
+    Suppose $X$ and $Y$ are two independent random variables, then $\mathrm{Cov}(X,Y)=0$.
+\end{theorem}
+\begin{proof}
+By the formula of covariance and theorem 0.1, we have:
+$$Cov(X,Y)=E[XY]-E[X]E[Y]=E[X]\cdot E[Y]-E[X]\cdot E[Y]=0$$
+\end{proof}
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+\subsection*{(a)}
+Let $Z$ be the outcome of the second roll:
+$$\mu_X=E[X]=\mu_Z=E[Z]=\frac{1+2+3+4}{4}=2.5$$
+Since $Y=X+Z$:
+$$\mu_Y=E[Y]=E[X+Z]=E[X]+E[Z]=5$$
+Then we can calculate $\sigma_X^2$ and $\sigma_Y^2$:
+\begin{align*}
+    \sigma_X^2&=E[X^2]-(E[X])^2 \\
+    &=\sum^4_{k=1}k^2/4-(2.5)^2 \\
+    &=1.25 \\
+    \sigma_Y^2&=\sigma_X^2+\sigma_Z^2+2\mathrm{Cov}(X,Z) \\
+    &=\sigma_X^2+\sigma_Z^2=1.25+1.25=2.5
+\end{align*}
+The last equation comes from theorem 0.2.
+
+Finally, we can calculate the covariance between $X$ and $Y$ using the following steps:
+\begin{align*}
+    \mathrm{Cov}(X,Y)&=\mathrm{Cov}(X,X+Z) \\
+    &=E[X(X+Z)]-E[X]E[X+Z] \\
+    &=E[X^2]+E[XZ]-(E[X])^2-E[X]E[Z] \\
+    &=E[X^2]-(E[X])^2+E[XZ]-E[X][Z] \\
+    &=\sigma_X^2+0=1.25 \\
+    \rho&=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y} \\
+    &=\frac{1.25}{\sqrt{1.25}\sqrt{2.5}}\\
+    &=0.7071
+\end{align*}
+
+\subsection*{(b)}
+Suppose the regression line is $y=mx+c$, then slope $m$ and intercept $c$ are:
+\begin{align*}
+    m=\rho\cdot\frac{\sigma_Y}{\sigma_X}=0.7071\cdot\frac{\sqrt{2.5}}{\sqrt{1.25}}\approx 1 \\
+    c=\mu_Y-\mu_X=2.5
+\end{align*}
+Hence, the line is $y=x+2.5$. It's very intuitive because the regression line is exactly taking the first roll ($X$), then add the average of the second roll ($Z$ with $E[Z]=2.5$).
+
+\begin{figure}[H]
+    \centering\includegraphics[width=0.9\linewidth]{canvas.png}
+    \caption{The least square regression line ($y=x+2.5$)}
+\end{figure}
+The purple dots are all the possible outcomes. The green dots show the conditional means $E[Y | X = x] = x + 2.5$ for each $x$, and the regression line (The red line) passes exactly through all four of them, this is a beautiful confirmation that the line $\hat{y} = x + 2.5$ is correct
 
 \end{document}
 % how to display codes?
