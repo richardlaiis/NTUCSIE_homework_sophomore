@@ -136,7 +136,7 @@ For 15 independent items, $(X,Y,15-X-Y)$ follows a multinomial distribution. So 
 \begin{align*}
     f(x,y)=P(X=x,Y=y)=\frac{15!}{x!y!(15-x-y)!}(\frac{6}{10})^x(\frac{3}{10})^y(\frac{1}{10})^{15-x-y}
 \end{align*}
-And it's valid when $x\ge 0,y\ge 0,x+y\le 15$.
+And it's valid when $x\ge 0,y\ge 0,x+y\le 15$. (Otherwise, $f(x,y)=0$)
 \subsection*{(b)}
 By the constraints I previously mentioned, we can draw the following graph. (The colored region is the set of integers $(x,y)$ for which $f(x,y)>0$)
 \begin{figure}[H]
@@ -158,6 +158,7 @@ We should sum over all possible $y$, but we each item is "good" with probability
 
 Thus, the marginal pmf of $X$ is:
 $$f_X(x)=P(X=x)=\binom{15}{x}(0.6)^x(0.4)^{15-x}$$
+
 \subsection*{(e)}
 \begin{align*}
     P(X\le 11)&=1-P(X>11) \\
