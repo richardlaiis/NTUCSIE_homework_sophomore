@@ -48,6 +48,36 @@
 \begin{document}
 \maketitle
 
+\section{}
+Let $\zeta_n$ be a primitive n-th root of unity and $K_n=\mathbb{Q}(\zeta_n)$. Since the minimal polynomial of $\zeta_n$ over $\mathbb{Q}$ is the cyclotomic polynomial $\Phi(x)$, which has degree $\varphi(n)$. 
+
+$\mathbb{Q}(\zeta_n)$ contains all roots of $\Phi(x)$, so it's a splitting field, hence normal. Since $\mathbb{Q}$ is characteristic 0 field, $\mathbb{Q}(\zeta_n)/\mathbb{Q}$ is separable. Here we have $\mathbb{Q}(\zeta_n)/\mathbb{Q}$ is Galois.
+
+$G=\mathrm{Aut}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ acts on the roots of $\Phi(x)$ transitively, and every automorphism $\sigma\in G$ is determined by its action on $\zeta_n$. Since $\sigma(\zeta_n)$ must again be a primitive n-th root of unity, we have:
+$$\sigma(\zeta_n)=\zeta_n^k\text{ for some }k\in(\mathbb{Z}/n\mathbb{Z})^\times$$
+
+This gives a well-defined injective homomorphism:
+$$\pi:\mathrm{Aut}(K_n/\mathbb{Q})\hookrightarrow (\mathbb{Z}/n\mathbb{Z})^\times,\ \sigma_k\mapsto k$$
+where $\sigma$ maps $\zeta_n$ to $\zeta_n^k$ for some $k\in(\mathbb{Z}/n\mathbb{Z})^\times$ (The homomorphy is easy to check. $\pi(\sigma_a\circ\sigma_b)=\pi(\sigma_{ab})=ab=\pi(\sigma_a)\pi(\sigma_b)$, $\circ$ stands for composition here)
+
+Because both $\mathrm{Aut}(K_n/\mathbb{Q})$ and $(\mathbb{Z}/n\mathbb{Z})^\times$ has the order of $\phi(n)$, this is an isomorphism.
+
+\section{}
+Let $f(x)=x^{2^n}+x+1$ be defined over $\mathbb{F}$. Assume it's irreducible.
+
+Let $\alpha$ be a root of $f(x)$ in the splitting field of $f$, by definition we have:
+\begin{align*}
+    \alpha^{2^n}+\alpha+1=0 \\
+    \alpha^{2^n}=-\alpha-1=\alpha+1 \\
+    (\alpha^{2^n})^{2^n}=(\alpha+1)^{2^n} \\
+    \alpha^{2^{2n}}=\alpha^{2^n}+1=-\alpha=\alpha
+\end{align*}
+The relation $\alpha^{2^{2n}}=\alpha$ guarantees that $\alpha$ is a element of $\mathbb{F}_{2^{2n}}$.
+
+$[\mathbb{F}_{2^{2n}}:\mathbb{F}_2]=2n$, since we assume that $f$ is irreducible, the degree of $f$ must divide $2n$:
+$$2^{n}\mid 2n$$
+
+When $n=1,2$, the relation holds. But when $n>3$, $2^n>2n$ is always true (This can be proved by induction), so $2^n \nmid 2n$ when $n>3$. In conclusion, $f$ is irreducible only when $n=1$ or $n=2$.
 
 \end{document}
 % how to display codes?
