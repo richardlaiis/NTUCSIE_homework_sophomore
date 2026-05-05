@@ -1,0 +1,45 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{module}\PYG{+w}{ }\PYG{n}{cla\PYGZus{}gl}\PYG{p}{(}
+\PYG{+w}{    }\PYG{k}{output}\PYG{+w}{ }\PYG{n}{C3}\PYG{p}{,}\PYG{+w}{       }\PYG{c+c1}{// carry output}
+\PYG{+w}{    }\PYG{k}{output}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{o}{:}\PYG{l+m+mh}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{n}{S}\PYG{p}{,}\PYG{+w}{   }\PYG{c+c1}{// sum}
+\PYG{+w}{    }\PYG{k}{input}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{o}{:}\PYG{l+m+mh}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{,}\PYG{+w}{ }\PYG{c+c1}{// operands}
+\PYG{+w}{    }\PYG{k}{input}\PYG{+w}{ }\PYG{n}{C0}\PYG{+w}{         }\PYG{c+c1}{// carry input}
+\PYG{+w}{    }\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{o}{:}\PYG{l+m+mh}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{n}{c1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c2}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{g\PYGZus{}and0}\PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{g\PYGZus{}and1}\PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{g\PYGZus{}and2}\PYG{p}{(}\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}or0}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}or1}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}or2}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor0}\PYG{p}{(}\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor1}\PYG{p}{(}\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor2}\PYG{p}{(}\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+
+\PYG{+w}{    }\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{n}{p0c0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{and\PYGZus{}p0c0}\PYG{p}{(}\PYG{n}{p0c0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{C0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{or\PYGZus{}c1}\PYG{p}{(}\PYG{n}{c1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p0c0}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{n}{g0p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c0p0p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c2\PYGZus{}tmp}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{and\PYGZus{}c0p0p1}\PYG{p}{(}\PYG{n}{c0p0p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p0c0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{and\PYGZus{}g0p1}\PYG{p}{(}\PYG{n}{g0p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{or\PYGZus{}c2tmp}\PYG{p}{(}\PYG{n}{c2\PYGZus{}tmp}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{g0p1}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{OR}\PYG{+w}{ }\PYG{n}{or\PYGZus{}c2}\PYG{p}{(}\PYG{n}{c2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c2\PYGZus{}tmp}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c0p0p1}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{n}{g1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g0p1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c0p0p1p2}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{AND4}\PYG{+w}{ }\PYG{n}{and4\PYGZus{}c0p0p1p2}\PYG{p}{(}\PYG{n}{c0p0p1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{C0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{and\PYGZus{}g0p1p2}\PYG{p}{(}\PYG{n}{g0p1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g0p1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+\PYG{+w}{    }\PYG{n}{AND}\PYG{+w}{ }\PYG{n}{and\PYGZus{}g1p2}\PYG{p}{(}\PYG{n}{g1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{]);}
+
+\PYG{+w}{    }\PYG{n}{OR4}\PYG{+w}{ }\PYG{n}{or4\PYGZus{}c3}\PYG{p}{(}\PYG{n}{C3}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{g1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{g0p1p2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c0p0p1p2}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{xor\PYGZus{}s0}\PYG{p}{(}\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{C0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{xor\PYGZus{}s1}\PYG{p}{(}\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{c1}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{XOR}\PYG{+w}{ }\PYG{n}{xor\PYGZus{}s2}\PYG{p}{(}\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{p\PYGZus{}xor}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{c2}\PYG{p}{);}
+\PYG{k}{endmodule}
+\end{MintedVerbatim}

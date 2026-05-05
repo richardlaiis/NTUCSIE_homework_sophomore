@@ -7,11 +7,11 @@ module lab1_main();
 	reg c0;
 	wire[2:0] s, s_gl;
 	wire c3, c3_gl;
-	adder_rtl adder(c3, s, a, b, c0);
+	// adder_rtl adder(c3, s, a, b, c0);
 
 	// TODO:: Try to connect the module into our test bench
-	//?? adder_gl(c3_gl, s_gl, a, b, c0);
-	
+	cla_gl adder_gl(c3_gl, s_gl, a, b, c0);
+	// rca_gl adder_gl(c3_gl, s_gl, a, b, c0);
 
 	// track the maximum delays
 	integer delay, max_delay=0, time_max;

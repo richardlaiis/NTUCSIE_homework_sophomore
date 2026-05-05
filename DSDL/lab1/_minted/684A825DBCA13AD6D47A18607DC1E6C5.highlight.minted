@@ -1,0 +1,15 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{module}\PYG{+w}{ }\PYG{n}{rca\PYGZus{}gl}\PYG{p}{(}
+\PYG{+w}{	}\PYG{k}{output}\PYG{+w}{ }\PYG{n}{C3}\PYG{p}{,}\PYG{+w}{       }\PYG{c+c1}{// carry output}
+\PYG{+w}{	}\PYG{k}{output}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{o}{:}\PYG{l+m+mh}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{n}{S}\PYG{p}{,}\PYG{+w}{   }\PYG{c+c1}{// sum}
+\PYG{+w}{	}\PYG{k}{input}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{o}{:}\PYG{l+m+mh}{0}\PYG{p}{]}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{,}\PYG{+w}{ }\PYG{c+c1}{// operands}
+\PYG{+w}{	}\PYG{k}{input}\PYG{+w}{ }\PYG{n}{C0}\PYG{+w}{         }\PYG{c+c1}{// carry input}
+\PYG{+w}{	}\PYG{p}{);}
+
+\PYG{+w}{	}\PYG{k+kt}{wire}\PYG{+w}{ }\PYG{n}{c1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{c2}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{FA}\PYG{+w}{ }\PYG{n}{fa0}\PYG{p}{(}\PYG{n}{c1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{0}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{C0}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{FA}\PYG{+w}{ }\PYG{n}{fa1}\PYG{p}{(}\PYG{n}{c2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{c1}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{FA}\PYG{+w}{ }\PYG{n}{fa2}\PYG{p}{(}\PYG{n}{C3}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{S}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{[}\PYG{l+m+mh}{2}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{c2}\PYG{p}{);}
+\PYG{+w}{	}
+\PYG{k}{endmodule}
+\end{MintedVerbatim}
