@@ -48,6 +48,28 @@
 \begin{document}
 \maketitle
 
+\section{Part 1}
+\subsection{}
+\inputminted[firstline=2,lastline=37,fontsize=\small]{verilog}{lab2.v}
+\subsection{}
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{1-2.png}
+\end{figure}
+\subsection{}
+In the worst-case scenario, data arriving just after a clock edge must wait almost a full cycle to be sampled by Stage 0, After being sampled by the input register, the data passes through two additional pipeline stages before reaching the output register. The latency is 3 clock cycles in total. Given the default testbench clock cycle of 10 ticks, the total latency is \textbf{30 ticks}.
+\section{Part 2}
+\subsection{}
+In a pipelined architecture, the minimum clock cycle is constrained by the longest combinational delay between any two sequential registers (the critical path).  
+
+We can look at mult\_fast: Stage 1 maximum delay is 7 ticks, and stage 2 maximum delay is 8 ticks.  
+
+Hence, the absolute minimum clock cycle to ensure timing requirements are met without a race condition is 8 ticks.
+
+\subsection{}
+\inputminted[firstline=40,lastline=80,fontsize=\small]{verilog}{lab2.v}
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{2-2.png}
+\end{figure}
 
 \end{document}
 % how to display codes?

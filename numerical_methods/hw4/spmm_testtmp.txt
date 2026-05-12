@@ -1,0 +1,317 @@
+➜  hw4 git:(main) ✗ ./spmm 2048 2048 64
+
+Benchmarking A(2048 x 2048) * B(2048 x 64) -> C(2048 x 64)
+
+Total NNZ: 65536
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 0.047979 s
+
+Custom CSR (OMP): 0.009874 s
+
+Intel oneMKL CSR: 0.000234 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 0.059976 s
+
+Intel oneMKL CSC: 0.035924 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 32768 32768 64
+
+Benchmarking A(32768 x 32768) * B(32768 x 64) -> C(32768 x 64)
+
+Total NNZ: 1048576
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 0.803766 s
+
+Custom CSR (OMP): 0.135150 s
+
+Intel oneMKL CSR: 0.015861 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 0.782033 s
+
+Intel oneMKL CSC: 0.649690 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 2048 2048 512
+
+Benchmarking A(2048 x 2048) * B(2048 x 512) -> C(2048 x 512)
+
+Total NNZ: 65536
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 0.386471 s
+
+Custom CSR (OMP): 0.066368 s
+
+Intel oneMKL CSR: 0.005661 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 0.381737 s
+
+Intel oneMKL CSC: 0.077356 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 32768 32768 512
+
+Benchmarking A(32768 x 32768) * B(32768 x 512) -> C(32768 x 512)
+
+Total NNZ: 1048576
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 5.884159 s
+
+Custom CSR (OMP): 0.843439 s
+
+Intel oneMKL CSR: 0.031922 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 4.472161 s
+
+Intel oneMKL CSC: 3.620328 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+
+➜  hw4 git:(main) ✗ ./spmm 8192 2048 64
+
+Benchmarking A(8192 x 2048) * B(2048 x 64) -> C(8192 x 64)
+
+Total NNZ: 262144
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 0.190338 s
+
+Custom CSR (OMP): 0.031310 s
+
+Intel oneMKL CSR: 0.000882 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 0.186802 s
+
+Intel oneMKL CSC: 0.174526 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 8192 2048 512
+
+Benchmarking A(8192 x 2048) * B(2048 x 512) -> C(8192 x 512)
+
+Total NNZ: 262144
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 1.527148 s
+
+Custom CSR (OMP): 0.205176 s
+
+Intel oneMKL CSR: 0.024510 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 1.491603 s
+
+Intel oneMKL CSC: 0.815360 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 131072 32768 64
+
+Benchmarking A(131072 x 32768) * B(32768 x 64) -> C(131072 x 64)
+
+Total NNZ: 4194304
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 3.158163 s
+
+Custom CSR (OMP): 0.469182 s
+
+Intel oneMKL CSR: 0.065122 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 3.194041 s
+
+Intel oneMKL CSC: 1.768347 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 131072 32768 512
+
+Benchmarking A(131072 x 32768) * B(32768 x 512) -> C(131072 x 512)
+
+Total NNZ: 4194304
+
+
+--- CSR Format Testing ---
+
+Custom CSR (Seq): 18.130387 s
+
+Custom CSR (OMP): 3.154593 s
+
+Intel oneMKL CSR: 0.143797 s
+
+
+--- CSC Format Testing ---
+
+Custom CSC (Seq): 23.442395 s
+
+Intel oneMKL CSC: 17.188166 s
+
+
+--- Verification ---
+
+CSR Sequential: PASSED
+
+CSR OpenMP:     PASSED
+
+CSC Sequential: PASSED
+
+➜  hw4 git:(main) ✗ ./spmm 2048 8192 64
+Benchmarking A(2048 x 8192) * B(8192 x 64) -> C(2048 x 64)
+Total NNZ: 65536
+
+--- CSR Format Testing ---
+Custom CSR (Seq): 0.047395 s
+Custom CSR (OMP): 0.010132 s
+Intel oneMKL CSR: 0.000462 s
+
+--- CSC Format Testing ---
+Custom CSC (Seq): 0.049950 s
+Intel oneMKL CSC: 0.031847 s
+
+--- Verification ---
+CSR Sequential: PASSED
+CSR OpenMP:     PASSED
+CSC Sequential: PASSED
+➜  hw4 git:(main) ✗ ./spmm 2048 8192 512
+Benchmarking A(2048 x 8192) * B(8192 x 512) -> C(2048 x 512)
+Total NNZ: 65536
+
+--- CSR Format Testing ---
+Custom CSR (Seq): 0.385677 s
+Custom CSR (OMP): 0.065517 s
+Intel oneMKL CSR: 0.004063 s
+
+--- CSC Format Testing ---
+Custom CSC (Seq): 0.376112 s
+Intel oneMKL CSC: 0.056290 s
+
+--- Verification ---
+CSR Sequential: PASSED
+CSR OpenMP:     PASSED
+CSC Sequential: PASSED
+➜  hw4 git:(main) ✗ ./spmm 32768 131072 64
+Benchmarking A(32768 x 131072) * B(131072 x 64) -> C(32768 x 64)
+Total NNZ: 1048576
+
+--- CSR Format Testing ---
+Custom CSR (Seq): 0.787346 s
+Custom CSR (OMP): 0.157959 s
+Intel oneMKL CSR: 0.009380 s
+
+--- CSC Format Testing ---
+Custom CSC (Seq): 0.750155 s
+Intel oneMKL CSC: 0.787235 s
+
+--- Verification ---
+CSR Sequential: PASSED
+CSR OpenMP:     PASSED
+CSC Sequential: FAILED
+➜  hw4 git:(main) ✗ ./spmm 32768 131072 512
+Benchmarking A(32768 x 131072) * B(131072 x 512) -> C(32768 x 512)
+Total NNZ: 1048576
+
+--- CSR Format Testing ---
+Custom CSR (Seq): 5.371787 s
+Custom CSR (OMP): 0.800118 s
+Intel oneMKL CSR: 0.095860 s
+
+--- CSC Format Testing ---
+Custom CSC (Seq): 5.856826 s
+Intel oneMKL CSC: 1.014275 s
+
+--- Verification ---
+CSR Sequential: PASSED
+CSR OpenMP:     PASSED
+CSC Sequential: FAILED
