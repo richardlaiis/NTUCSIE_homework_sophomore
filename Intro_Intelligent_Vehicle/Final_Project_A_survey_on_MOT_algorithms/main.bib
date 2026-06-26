@@ -1,0 +1,68 @@
+@article{sort,
+  author       = {Alex Bewley and
+                  ZongYuan Ge and
+                  Lionel Ott and
+                  Fabio Ramos and
+                  Ben Upcroft},
+  title        = {Simple Online and Realtime Tracking},
+  journal      = {CoRR},
+  volume       = {abs/1602.00763},
+  year         = {2016},
+  url          = {http://arxiv.org/abs/1602.00763},
+  eprinttype   = {arXiv},
+  eprint       = {1602.00763},
+  timestamp    = {Tue, 18 Oct 2022 08:35:41 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/BewleyGORU16.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{deepsort,
+  author       = {Nicolai Wojke and
+                  Alex Bewley and
+                  Dietrich Paulus},
+  title        = {Simple Online and Realtime Tracking with a Deep Association Metric},
+  journal      = {CoRR},
+  volume       = {abs/1703.07402},
+  year         = {2017},
+  url          = {http://arxiv.org/abs/1703.07402},
+  eprinttype   = {arXiv},
+  eprint       = {1703.07402},
+  timestamp    = {Mon, 13 Aug 2018 16:47:39 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/WojkeBP17.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{strongsort,
+ title={Strongsort: Make deepsort great again},
+ author={Du, Yunhao and Song, Yang and Yang, Bo and Zhao, Yanyun},
+ journal={arXiv preprint arXiv:2202.13514},
+ year={2022}
+}
+
+@inproceedings{bytetrack,
+author = {Zhang, Yifu and Sun, Peize and Jiang, Yi and Yu, Dongdong and Weng, Fucheng and Yuan, Zehuan and Luo, Ping and Liu, Wenyu and Wang, Xinggang},
+title = {ByteTrack: Multi-object Tracking by Associating Every Detection Box},
+year = {2022},
+isbn = {978-3-031-20046-5},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+url = {https://doi.org/10.1007/978-3-031-20047-2_1},
+doi = {10.1007/978-3-031-20047-2_1},
+abstract = {Multi-object tracking (MOT) aims at estimating bounding boxes and identities of objects in videos. Most methods obtain identities by associating detection boxes whose scores are higher than a threshold. The objects with low detection scores, e.g. occluded objects, are simply thrown away, which brings non-negligible true object missing and fragmented trajectories. To solve this problem, we present a simple, effective and generic association method, tracking by associating almost every detection box instead of only the high score ones. For the low score detection boxes, we utilize their similarities with tracklets to recover true objects and filter out the background detections. When applied to 9 different state-of-the-art trackers, our method achieves consistent improvement on IDF1 score ranging from 1 to 10 points. To put forwards the state-of-the-art performance of MOT, we design a simple and strong tracker, named ByteTrack. For the first time, we achieve 80.3 MOTA, 77.3 IDF1 and 63.1 HOTA on the test set of MOT17 with 30 FPS running speed on a single V100 GPU. ByteTrack also achieves state-of-the-art performance on MOT20, HiEve and BDD100K tracking benchmarks. The source code, pre-trained models with deploy versions and tutorials of applying to other trackers are released at .},
+booktitle = {Computer Vision – ECCV 2022: 17th European Conference, Tel Aviv, Israel, October 23–27, 2022, Proceedings, Part XXII},
+pages = {1–21},
+numpages = {21},
+keywords = {Detection boxes, Data association, Multi-object tracking},
+location = {Tel Aviv, Israel}
+}
+
+@INPROCEEDINGS{ocsort,
+  author={Cao, Jinkun and Pang, Jiangmiao and Weng, Xinshuo and Khirodkar, Rawal and Kitani, Kris},
+  booktitle={2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={Observation-Centric SORT: Rethinking SORT for Robust Multi-Object Tracking}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={9686-9696},
+  keywords={Target tracking;Detectors;Nonlinear filters;Real-time systems;Robustness;Trajectory;Pattern recognition;Vision applications and systems},
+  doi={10.1109/CVPR52729.2023.00934}}
